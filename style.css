@@ -904,6 +904,12 @@ h1 {
     text-decoration: underline;
 }
 
+.strip-meta {
+    font-size: 0.79rem;
+    font-weight: 500;
+    color: var(--ink-body);
+}
+
 .copy-pill {
     background: rgba(236, 72, 153, 0.08);
     border: 1px solid rgba(236, 72, 153, 0.22);
@@ -1129,3 +1135,4 @@ h1 {
         line-height: 1.55;
     }
 }
+
