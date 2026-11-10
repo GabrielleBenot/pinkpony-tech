@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pink Pony Tech | Private Technology Holding &amp; AI Venture Lab</title>
+    <meta name="description" content="Pink Pony Tech LLC is a privately held technology holding company and proprietary venture lab engineering intelligent AI software, automated workflows, and couture digital platforms.">
+    <meta property="og:title" content="Pink Pony Tech | Private Technology Holding &amp; AI Venture Lab">
+    <meta property="og:description" content="Proprietary AI systems, high-craft software ventures, and design-engineered digital infrastructure.">
+    <meta property="og:url" content="https://pinkpony.tech">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#fdf7fa">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=1">
+
+    <!-- Structured Corporate Metadata for Entity, Counterparty & Platform Verification -->
+    <!-- NOTE: Update address/telephone below anytime if you wish to publish a registered agent address or phone line -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Pink Pony Tech",
+      "legalName": "Pink Pony Tech LLC",
+      "url": "https://pinkpony.tech",
+      "description": "Privately held technology holding company and proprietary AI & software venture studio developing intelligent applications, creative automation infrastructure, and digital platforms.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "US"
+      },
+      "email": "hello@pinkpony.tech",
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "email": "hello@pinkpony.tech",
+          "contactType": "general, studio, and partnership inquiries"
+        },
+        {
+          "@type": "ContactPoint",
+          "email": "admin@pinkpony.tech",
+          "contactType": "corporate governance, banking compliance, and vendor inquiries"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Import Map for Three.js r160 ES Modules (Real-Time Crystal Refraction & Iridescence) -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
+</head>
+<body>
+    <!-- Soft Pearlescent & Iridescent Ambient Backdrop -->
+    <div class="ambient-auras" aria-hidden="true">
+        <span class="aura aura-rose"></span>
+        <span class="aura aura-prism"></span>
+        <span class="aura aura-lilac"></span>
+    </div>
+
+    <!-- Full-Screen 3D Three.js Stage (Sculptural Crystal Pony + Prismatic Rainbow Silk Waves) -->
+    <div id="canvas-container" aria-hidden="true"></div>
+
+    <!-- Subtle Interactive Mother-of-Pearl Sparkle & Ripple Overlay -->
+    <canvas id="sparkle-canvas" aria-hidden="true"></canvas>
+
+    <!-- Top-Right Liquid Pearl-Glass Navigation Menu -->
+    <header class="top-menu-wrapper">
+        <nav class="small-glass-menu" aria-label="Primary Navigation">
+            <button type="button" id="nav-home" class="menu-item active" aria-current="page">
+                Home
+            </button>
+            <button type="button" id="nav-about" class="menu-item" aria-expanded="false" aria-controls="about-subtabs">
+                About
+            </button>
+
+            <!-- Individual Couture Card Tabs (01, 02, 03, 04) inside the About Menu -->
+            <div id="about-subtabs" class="about-subtabs" role="tablist" aria-label="About Pink Pony Tech Cards" hidden>
+                <span class="menu-divider" aria-hidden="true"></span>
+                <button type="button" role="tab" class="tab-pill" data-card="card-1" aria-selected="false" aria-controls="card-1">
+                    <span class="tab-num">01</span> Mandate
+                </button>
+                <button type="button" role="tab" class="tab-pill" data-card="card-2" aria-selected="false" aria-controls="card-2">
+                    <span class="tab-num">02</span> Systems
+                </button>
+                <button type="button" role="tab" class="tab-pill" data-card="card-3" aria-selected="false" aria-controls="card-3">
+                    <span class="tab-num">03</span> Ventures
+                </button>
+                <button type="button" role="tab" class="tab-pill" data-card="card-4" aria-selected="false" aria-controls="card-4">
+                    <span class="tab-num">04</span> Governance
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Bottom-Left Interactive Light Spectrum & Prism Pulse Control -->
+    <aside class="prism-dock" aria-label="Interactive Light Spectrum Controls">
+        <span class="dock-label">Light</span>
+        <div class="spectrum-pills" role="group" aria-label="Select 3D Refraction Spectrum">
+            <button type="button" class="spectrum-btn active" data-spectrum="rainbow" title="Pink &amp; Pastel Rainbow Prism">
+                <span class="swatch swatch-rainbow"></span>
+                <span>Prism</span>
+            </button>
+            <button type="button" class="spectrum-btn" data-spectrum="rose" title="Couture Rose Quartz &amp; Blush Champagne">
+                <span class="swatch swatch-rose"></span>
+                <span>Rose</span>
+            </button>
+            <button type="button" class="spectrum-btn" data-spectrum="opal" title="Iridescent Pearl, Mint &amp; Lilac Opal">
+                <span class="swatch swatch-opal"></span>
+                <span>Opal</span>
+            </button>
+        </div>
+        <span class="dock-divider" aria-hidden="true"></span>
+        <button type="button" id="prism-pulse-btn" class="pulse-btn" title="Send a harmonic rainbow wave through the crystal sculpture">
+            <span class="spark-glyph" aria-hidden="true">&#10022;</span> Shimmer
+        </button>
+    </aside>
+
+    <!-- DEFAULT VIEW: Minimal Couture Pearl-Glass Hero Card (Bottom-Right) -->
+    <main id="hero-card" class="glass-container spotlight-card">
+        <div class="prism-top-edge" aria-hidden="true"></div>
+        <div class="header-row">
+            <div class="emblem-wrap" id="hero-emblem" title="Click for prism shimmer">
+                <svg class="halo-ring" viewBox="0 0 64 64" width="54" height="54" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="haloRainbow" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ec4899" />
+                            <stop offset="25%" stop-color="#fb7185" />
+                            <stop offset="50%" stop-color="#f59e0b" />
+                            <stop offset="75%" stop-color="#38bdf8" />
+                            <stop offset="100%" stop-color="#a855f7" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="32" cy="32" r="29" fill="none" stroke="url(#haloRainbow)" stroke-width="1.2" stroke-dasharray="6 4" opacity="0.75"/>
+                    <circle cx="32" cy="32" r="24" fill="none" stroke="url(#haloRainbow)" stroke-width="0.9" opacity="0.4"/>
+                    <path d="M32 1.5v4.5M32 58v4.5M1.5 32h4.5M58 32h4.5" stroke="url(#haloRainbow)" stroke-width="1.3" stroke-linecap="round"/>
+                </svg>
+                <svg class="pony-crest-icon" viewBox="0 0 64 64" width="36" height="36" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="ponyCrestGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+                            <stop offset="0%" stop-color="#db2777" />
+                            <stop offset="52%" stop-color="#ec4899" />
+                            <stop offset="100%" stop-color="#9333ea" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M42.18 10.06 C42.49 8.2,43.27 6.8,43.88 6.5 C44.35 7.74,44.35 8.97,44.81 9.44 C45.59 7.43,46.83 5.72,47.76 5.41 C48.07 7.43,47.45 9.29,46.98 10.37 C48.53 11.3,49.78 13.32,51.33 15.02 C52.88 16.72,54.27 17.5,54.42 18.74 C54.42 19.98,53.19 20.6,51.79 20.13 C50.09 19.52,48.69 20.13,46.67 19.2 C45.75 18.74,44.97 18.74,44.66 19.83 C44.66 23.39,47.76 27.57,47.91 32.07 C47.91 34.55,46.83 36.41,45.59 37.65 C48.23 37.8,51.48 38.42,52.56 40.59 C53.19 41.99,51.95 45.09,50.24 47.57 C49.78 48.34,49.78 49.12,49.16 49.59 L47.45 48.66 C47.61 47.73,48.38 46.64,49.62 44.31 C50.55 42.45,50.24 41.06,47.91 39.98 C46.37 39.35,45.12 39.2,44.35 39.51 C44.04 43.85,43.58 50.36,43.73 55.63 C43.88 56.72,44.66 57.49,44.5 58.11 L42.18 58.11 C42.02 56.87,42.18 54.7,42.18 50.05 C42.18 45.4,41.72 41.68,40.78 39.2 C36.6 39.98,31.18 39.35,26.99 37.65 C26.84 41.99,26.37 46.33,26.99 51.29 C27.45 54.39,28.07 56.56,28.23 58.11 L25.91 58.11 C25.75 56.25,25.13 53.15,24.66 49.43 C24.2 46.02,24.36 42.61,24.51 39.51 C22.96 41.52,20.79 44.47,19.86 47.26 C19.55 50.67,20.33 55.01,20.63 58.11 L18.31 58.11 C18.16 55.32,17.38 50.67,17.38 46.64 C17.38 44.31,19.39 41.52,19.86 37.96 C18.77 34.86,18.31 31.76,19.09 29.12 C16.76 28.66,14.59 30.52,13.82 34.55 C13.2 38.27,13.66 42.61,11.8 46.02 C9.94 43.54,8.39 39.2,8.08 33.93 C7.77 28.66,9.94 23.39,14.28 22.77 C16.76 22.46,18.31 24.32,20.02 26.18 C22.19 24.63,25.75 24.94,28.85 26.95 C31.95 28.81,34.74 28.35,36.29 25.56 C35.05 22.46,35.67 18.12,37.53 14.71 C38.92 12.23,40.48 10.84,42.18 10.06 Z" fill="url(#ponyCrestGrad)"/>
+                </svg>
+            </div>
+            <h1>Pink Pony</h1>
+        </div>
+        <p class="brand-name">Tech</p>
+        <div class="rainbow-divider" aria-hidden="true"></div>
+        <p class="tagline">
+            Private Technology Holding &amp; Venture Lab<br>
+            Engineering Couture Intelligence <span class="prism-mark">&amp;</span> Digital <span class="prism-italic">Systems</span>
+        </p>
+        <button type="button" id="explore-about-btn" class="about-trigger-pill">
+            <span>About &amp; Governance</span>
+            <span class="trigger-arrow">&rarr;</span>
+        </button>
+    </main>
+
+    <!-- ABOUT VIEW: Individual Detail Cards (Only ONE card opens at a time in the bottom-right) -->
+    <section id="about-stage" class="about-stage" aria-label="About Pink Pony Tech">
+
+        <!-- CARD 01: Mandate & Corporate Overview -->
+        <article id="card-1" role="tabpanel" class="glass-detail-card spotlight-card" hidden>
+            <div class="prism-top-edge" aria-hidden="true"></div>
+            <div class="card-top-bar">
+                <span class="card-badge">PINK PONY TECH &nbsp;&bull;&nbsp; 01 / 04</span>
+                <button type="button" class="card-close-btn" aria-label="Return to Home">&times;</button>
+            </div>
+            <h2>Corporate Overview &amp; Principal Mandate</h2>
+            <p class="card-lead">
+                <strong>Pink Pony Tech LLC</strong> is a privately held technology holding company and proprietary venture lab established to conceive, build, and operate intelligent software platforms, AI workflows, and design-led digital assets.
+            </p>
+            <ul class="card-points">
+                <li>
+                    <strong>Couture Design Meets Deep Engineering:</strong> Combines rigorous systems architecture and multimodal AI intelligence with refined, editorial-grade user experiences—proving enterprise technology can be both formidable and effortlessly feminine.
+                </li>
+                <li>
+                    <strong>Proprietary Venture &amp; IP Ownership:</strong> Operates as a principal holding and incubation vehicle developing wholly owned software products, creative technology engines, and internal automation infrastructure across our portfolio.
+                </li>
+            </ul>
+            <div class="card-nav-footer">
+                <span class="status-tag">Private Technology Holding &amp; Studio</span>
+                <button type="button" class="card-step-btn" data-target="card-2">02 Systems &rarr;</button>
+            </div>
+        </article>
+
+        <!-- CARD 02: Proprietary AI & Product Architecture -->
+        <article id="card-2" role="tabpanel" class="glass-detail-card spotlight-card" hidden>
+            <div class="prism-top-edge" aria-hidden="true"></div>
+            <div class="card-top-bar">
+                <span class="card-badge">PINK PONY TECH &nbsp;&bull;&nbsp; 02 / 04</span>
+                <button type="button" class="card-close-btn" aria-label="Return to Home">&times;</button>
+            </div>
+            <h2><code>Prism Core</code> AI &amp; Systems Architecture</h2>
+            <p class="card-lead">
+                Product incubation, autonomous workflows, and real-time interactive experiences are powered by internal <strong>Prism Core</strong> orchestration pipelines and modern cloud-native infrastructure operated by Pink Pony Tech.
+            </p>
+            <ul class="card-points">
+                <li>
+                    <strong>Agentic &amp; Multimodal Intelligence:</strong> Custom orchestration across frontier language, vision, and generative media models for automated editorial production, SEO intelligence, and high-precision creative tooling.
+                </li>
+                <li>
+                    <strong>Spatial &amp; Interactive Web Engineering:</strong> Real-time WebGL shaders, responsive application stacks, and zero-latency cloud edge deployment engineered for aesthetic clarity and reliability.
+                </li>
+                <li>
+                    <strong>Security-First Governance:</strong> Strict credential isolation, encrypted cloud storage custody, and auditable deployment pipelines across all proprietary repositories and production domains.
+                </li>
+            </ul>
+            <div class="card-nav-footer">
+                <button type="button" class="card-step-btn secondary" data-target="card-1">&larr; 01 Mandate</button>
+                <button type="button" class="card-step-btn" data-target="card-3">03 Ventures &rarr;</button>
+            </div>
+        </article>
+
+        <!-- CARD 03: Venture Ecosystem, Partners & Corporate Desk -->
+        <article id="card-3" role="tabpanel" class="glass-detail-card spotlight-card" hidden>
+            <div class="prism-top-edge" aria-hidden="true"></div>
+            <div class="card-top-bar">
+                <span class="card-badge">PINK PONY TECH &nbsp;&bull;&nbsp; 03 / 04</span>
+                <button type="button" class="card-close-btn" aria-label="Return to Home">&times;</button>
+            </div>
+            <h2>Venture Ecosystem &amp; Operational Partners</h2>
+            <p class="card-lead">
+                Pink Pony Tech collaborates with <strong>tier-one cloud infrastructure providers, frontier AI model platforms, enterprise registrars, and financial &amp; legal advisors</strong> supporting our proprietary software ventures and corporate operations.
+            </p>
+            <div class="partners-list-box">
+                <span class="strip-label">Core Stack &amp; Institutional Infrastructure</span>
+                <div class="partner-badges">
+                    <div class="partner-chip">
+                        <strong>GitHub &amp; Cloud Edge</strong>
+                        <span>CI/CD &amp; Global Hosting</span>
+                    </div>
+                    <div class="partner-chip">
+                        <strong>Google Cloud &amp; Firebase</strong>
+                        <span>Serverless &amp; Media Custody</span>
+                    </div>
+                    <div class="partner-chip">
+                        <strong>Frontier AI APIs</strong>
+                        <span>Multimodal Inference</span>
+                    </div>
+                    <div class="partner-chip">
+                        <strong>Banking &amp; CPA Counsel</strong>
+                        <span>Treasury &amp; Tax Governance</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-contact-strip">
+                <div>
+                    <span class="strip-label">Studio &amp; Venture Desk</span>
+                    <div class="copy-email-row">
+                        <a href="mailto:hello@pinkpony.tech" class="strip-link">hello@pinkpony.tech</a>
+                        <button type="button" class="copy-pill" data-copy="hello@pinkpony.tech" title="Copy email address">Copy</button>
+                    </div>
+                </div>
+                <div>
+                    <span class="strip-label">Compliance &amp; Vendor Desk</span>
+                    <div class="copy-email-row">
+                        <a href="mailto:admin@pinkpony.tech" class="strip-link">admin@pinkpony.tech</a>
+                        <button type="button" class="copy-pill" data-copy="admin@pinkpony.tech" title="Copy compliance email">Copy</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-nav-footer">
+                <button type="button" class="card-step-btn secondary" data-target="card-2">&larr; 02 Systems</button>
+                <button type="button" class="card-step-btn" data-target="card-4">04 Governance &rarr;</button>
+            </div>
+        </article>
+
+        <!-- CARD 04: Corporate Governance, IP & Disclaimers -->
+        <article id="card-4" role="tabpanel" class="glass-detail-card spotlight-card" hidden>
+            <div class="prism-top-edge" aria-hidden="true"></div>
+            <div class="card-top-bar">
+                <span class="card-badge compliance-badge">PINK PONY TECH &nbsp;&bull;&nbsp; 04 / 04</span>
+                <button type="button" class="card-close-btn" aria-label="Return to Home">&times;</button>
+            </div>
+            <h2>Corporate Governance &amp; Legal Disclaimers</h2>
+            <ul class="card-points compact-points">
+                <li>
+                    <strong>Corporate Verification &amp; Scope:</strong> This domain (<code>pinkpony.tech</code>) serves as the official corporate presence for <strong>Pink Pony Tech LLC</strong> for institutional, platform, vendor, and banking verification, alongside select venture inquiries via <a href="mailto:admin@pinkpony.tech" class="strip-link">admin@pinkpony.tech</a>.
+                </li>
+                <li>
+                    <strong>Non-Solicitation &amp; Private Capital:</strong> Pink Pony Tech LLC funds and develops its proprietary software portfolio internally. Nothing on this website constitutes an offer to sell securities, a solicitation of outside investment capital, or financial, legal, or tax advice.
+                </li>
+                <li>
+                    <strong>Intellectual Property Custody:</strong> The <strong>Pink Pony Tech</strong> name, Crystal Pony crest, custom 3D visual architecture, and underlying proprietary venture software are protected intellectual property. All third-party platform names remain the property of their respective owners.
+                </li>
+            </ul>
+            <div class="card-nav-footer">
+                <button type="button" class="card-step-btn secondary" data-target="card-3">&larr; 03 Ventures</button>
+                <button type="button" class="card-step-btn" data-target="home">Back to Home</button>
+            </div>
+        </article>
+
+        <!-- CARD PRIVACY: Privacy Policy (Opened from Footer Link) -->
+        <article id="card-privacy" role="tabpanel" class="glass-detail-card spotlight-card" hidden>
+            <div class="prism-top-edge" aria-hidden="true"></div>
+            <div class="card-top-bar">
+                <span class="card-badge">LEGAL &amp; GOVERNANCE &nbsp;&bull;&nbsp; PRIVACY NOTICE</span>
+                <button type="button" class="card-close-btn" aria-label="Return to Home">&times;</button>
+            </div>
+            <h2>Privacy Policy</h2>
+            <p class="card-lead">
+                This website (<code>pinkpony.tech</code>) is operated by <strong>Pink Pony Tech LLC</strong>. We respect digital privacy and maintain minimal data collection aligned with corporate governance. Direct inquiries to <a href="mailto:admin@pinkpony.tech" class="strip-link">admin@pinkpony.tech</a>.
+            </p>
+            <div class="legal-scroll-area">
+                <ul class="card-points compact-points">
+                    <li>
+                        <strong>1. Minimal Data Footprint:</strong> This corporate site does not run behavioral ad networks, sell personal data, or require public user registration. Visitors may explore the interactive experience without submitting personal information.
+                    </li>
+                    <li>
+                        <strong>2. Infrastructure Logs &amp; Direct Correspondence:</strong> Data processed is limited to: (a) standard edge/CDN security and access logs (IP address, browser user-agent, timestamp) required to protect hosting infrastructure, and (b) business contact details voluntarily emailed to our team.
+                    </li>
+                    <li>
+                        <strong>3. Zero Marketing Trackers:</strong> We do not deploy third-party cross-site advertising pixels or invasive tracking cookies on <code>pinkpony.tech</code>.
+                    </li>
+                    <li>
+                        <strong>4. Confidentiality &amp; Permitted Disclosure:</strong> Business and vendor correspondence is used solely for operational governance, partnership evaluation, and compliance, and is shared only with trusted infrastructure, accounting, banking, or legal advisors as required.
+                    </li>
+                    <li>
+                        <strong>5. Your Privacy Rights:</strong> Depending on your jurisdiction, you may request access to, correction of, or deletion of your business contact records by contacting <a href="mailto:admin@pinkpony.tech" class="strip-link">admin@pinkpony.tech</a>.
+                    </li>
+                </ul>
+            </div>
+            <div class="card-nav-footer">
+                <button type="button" class="card-step-btn secondary" data-target="home">&larr; Back to Home</button>
+                <button type="button" class="card-step-btn" data-target="card-terms">Terms of Use &rarr;</button>
+            </div>
+        </article>
+
+        <!-- CARD TERMS: Terms of Use (Opened from Footer Link) -->
+        <article id="card-terms" role="tabpanel" class="glass-detail-card spotlight-card" hidden>
+            <div class="prism-top-edge" aria-hidden="true"></div>
+            <div class="card-top-bar">
+                <span class="card-badge compliance-badge">LEGAL &amp; GOVERNANCE &nbsp;&bull;&nbsp; TERMS OF USE</span>
+                <button type="button" class="card-close-btn" aria-label="Return to Home">&times;</button>
+            </div>
+            <h2>Terms of Use &amp; IP Notice</h2>
+            <p class="card-lead">
+                By accessing <code>pinkpony.tech</code>, you agree to these Terms of Use governing the official corporate web domain of <strong>Pink Pony Tech LLC</strong>. For governance inquiries, email <a href="mailto:admin@pinkpony.tech" class="strip-link">admin@pinkpony.tech</a>.
+            </p>
+            <div class="legal-scroll-area">
+                <ul class="card-points compact-points">
+                    <li>
+                        <strong>1. Informational &amp; Corporate Verification Purpose:</strong> Content on this site is provided for corporate identification, vendor/banking onboarding, and general venture overview. Nothing herein forms a binding service contract or investment solicitation.
+                    </li>
+                    <li>
+                        <strong>2. Intellectual Property &amp; Brand Assets:</strong> The <strong>Pink Pony Tech</strong> name, sculpted pony emblem, visual code, and copy are proprietary to Pink Pony Tech LLC. Unauthorized reproduction, brand impersonation, or automated scraping is prohibited.
+                    </li>
+                    <li>
+                        <strong>3. Separate Product Terms:</strong> Individual software applications, SaaS tools, or digital ventures incubated by Pink Pony Tech LLC are governed by their own respective product terms of service and privacy notices where applicable.
+                    </li>
+                    <li>
+                        <strong>4. Disclaimer of Warranties (&ldquo;AS IS&rdquo;):</strong> This website is provided strictly &ldquo;AS IS&rdquo; and &ldquo;AS AVAILABLE&rdquo; without warranties of any kind, express or implied. Pink Pony Tech LLC shall not be liable for any indirect or consequential damages arising from site use.
+                    </li>
+                    <li>
+                        <strong>5. Governing Law:</strong> These Terms of Use are governed by applicable laws of the United States and the state of corporate registration of Pink Pony Tech LLC, without regard to conflict-of-law principles.
+                    </li>
+                </ul>
+            </div>
+            <div class="card-nav-footer">
+                <button type="button" class="card-step-btn secondary" data-target="card-privacy">&larr; Privacy Policy</button>
+                <button type="button" class="card-step-btn" data-target="home">Back to Home</button>
+            </div>
+        </article>
+
+    </section>
+
+    <!-- Combined Clean Couture + Corporate Entity Identification Footer -->
+    <!-- Optional: Replace "United States" below with your LLC registered address & phone anytime if needed for bank KYC -->
+    <footer class="company-footer">
+        <p>
+            <strong>Pink Pony Tech LLC</strong>
+            <span class="footer-sep">&nbsp;|&nbsp;</span>
+            <span>Private Technology &amp; Venture Holding &bull; United States</span>
+            <span class="footer-sep">&nbsp;|&nbsp;</span>
+            <a href="mailto:hello@pinkpony.tech">hello@pinkpony.tech</a>
+            <span class="footer-sep">&nbsp;|&nbsp;</span>
+            <a href="#privacy" class="footer-card-link" data-card="card-privacy">Privacy Policy</a> &nbsp;&bull;&nbsp;
+            <a href="#terms" class="footer-card-link" data-card="card-terms">Terms of Use</a>
+        </p>
+    </footer>
+
+    <!-- Subtle Copy Confirmation Toast -->
+    <div id="copy-toast" class="copy-toast" role="status" aria-live="polite" hidden>Copied to clipboard</div>
+
+    <script type="module" src="script.js?v=1"></script>
+</body>
+</html>
