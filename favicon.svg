@@ -1,17 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
     <linearGradient id="prism" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fef3c7"/>
-      <stop offset="32%" stop-color="#e0f2fe"/>
-      <stop offset="68%" stop-color="#e2e8f0"/>
-      <stop offset="100%" stop-color="#f5d0df"/>
+      <stop offset="0%" stop-color="#f9a8d4"/>
+      <stop offset="28%" stop-color="#fde68a"/>
+      <stop offset="52%" stop-color="#a7f3d0"/>
+      <stop offset="76%" stop-color="#bae6fd"/>
+      <stop offset="100%" stop-color="#ddd6fe"/>
     </linearGradient>
     <linearGradient id="arabianGrad" x1="15%" y1="5%" x2="85%" y2="95%">
-      <stop offset="0%" stop-color="#8a6878"/>
-      <stop offset="52%" stop-color="#bc7d98"/>
-      <stop offset="100%" stop-color="#838ea3"/>
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="52%" stop-color="#f472b6"/>
+      <stop offset="100%" stop-color="#a855f7"/>
     </linearGradient>
   </defs>
-  <rect x="2" y="2" width="60" height="60" rx="18" fill="#fdfdfc" stroke="url(#prism)" stroke-width="2.2"/>
+  <rect x="2" y="2" width="60" height="60" rx="18" fill="#fcfbfd" stroke="url(#prism)" stroke-width="2.2"/>
   <path d="M52.50 9.00 L52.50 11.00 L54.00 9.50 L52.75 13.25 L56.50 21.50 L55.50 22.75 L53.50 22.75 L51.75 20.75 L48.25 19.50 L47.00 21.00 L47.00 23.50 L48.25 30.50 L47.50 34.25 L53.00 35.50 L53.75 36.50 L53.75 38.50 L50.75 44.00 L46.75 46.25 L47.25 43.50 L49.00 43.00 L50.75 40.25 L51.25 38.00 L45.25 38.25 L43.50 42.75 L42.00 49.75 L42.00 51.50 L43.50 54.75 L41.25 54.75 L40.00 52.00 L41.00 41.50 L40.50 38.25 L35.25 38.25 L30.00 36.75 L25.25 42.00 L25.25 43.75 L29.25 48.75 L29.00 52.25 L27.25 51.00 L27.00 48.50 L24.50 45.75 L21.00 42.75 L22.00 40.50 L19.50 42.25 L17.00 45.00 L15.75 48.00 L15.50 51.75 L16.50 54.50 L14.25 54.25 L13.50 50.75 L14.50 43.25 L17.50 38.50 L17.00 31.00 L19.25 26.50 L17.50 25.25 L16.50 25.50 L14.75 27.75 L14.00 35.75 L12.75 40.00 L9.75 43.50 L7.25 44.50 L9.00 41.75 L9.75 39.00 L9.00 28.25 L11.00 23.25 L13.50 21.75 L15.75 21.75 L18.50 22.75 L20.75 25.50 L23.00 24.75 L26.75 24.75 L31.00 25.75 L34.50 25.50 L37.25 23.25 L39.50 18.25 L42.50 14.25 L45.75 12.25 L50.00 11.75 Z" fill="url(#arabianGrad)"/>
 </svg>

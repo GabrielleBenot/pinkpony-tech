@@ -2,21 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Pink Pony Tech LLC | Private Family Office Investment Company</title>
     <meta name="description" content="Pink Pony Tech LLC is a privately held Wyoming investment company managing proprietary family office capital across regulated alternative asset venues supported by internal Prism AI quantitative analytics infrastructure. Non-commercial entity; closed to external investors.">
     <meta property="og:title" content="Pink Pony Tech LLC | Private Family Office Investment Company">
     <meta property="og:description" content="Private principal investment company managing internal family office capital across regulated alternative asset venues. Non-commercial entity.">
     <meta property="og:url" content="https://www.pinkpony.tech">
     <meta property="og:type" content="website">
-    <meta name="theme-color" content="#fdfdfc">
+    <meta name="theme-color" content="#fcfbfd">
 
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=11">
-    <link rel="preload" as="image" href="arabian_glassmorph.webp?v=11" type="image/webp" crossorigin="anonymous">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=12">
+    <link rel="preload" as="image" href="arabian_glassmorph.webp?v=12" type="image/webp" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=11">
+    <link rel="stylesheet" href="style.css?v=12">
 
     <!-- Structured Corporate Metadata for Automated Bank KYC / Entity Verification -->
     <!-- PLACEHOLDER: Replace STE 19475 and +1-307-461-5627 with Pink Pony Tech LLC's assigned suite & phone -->
@@ -79,7 +79,7 @@
     <!-- Full-Screen 3D Three.js Stage (Layered Optical-Glass Arabian & Precision Plinth) -->
     <div id="canvas-container" aria-hidden="true"></div>
 
-    <!-- Top-Right Frosted Pearl-Glass Navigation Capsule -->
+    <!-- Top-Right Frosted Pearl-Glass Navigation Capsule (Desktop) + Side Hamburger Trigger -->
     <header class="top-menu-wrapper">
         <nav class="small-glass-menu" aria-label="Primary Navigation">
             <button type="button" id="nav-home" class="menu-item active" aria-current="page">
@@ -108,7 +108,74 @@
         </nav>
     </header>
 
-    <!-- Bottom-Left Interactive Equine Gait & Optical Effects Capsule -->
+    <!-- Side Hamburger Trigger Button -->
+    <button type="button" id="hamburger-btn" class="hamburger-trigger" aria-label="Open Navigation Menu" aria-expanded="false" aria-controls="side-drawer">
+        <span class="hamburger-lines" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+    </button>
+
+    <!-- Slide-Out Frosted Glass Side Hamburger Menu -->
+    <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+    <aside id="side-drawer" class="side-glass-drawer" aria-label="Site Navigation Drawer" aria-hidden="true">
+        <div class="prism-top-edge" aria-hidden="true"></div>
+        <div class="drawer-header">
+            <span class="telemetry-tag">
+                <span class="optic-dot" aria-hidden="true"></span>
+                PINK PONY TECH
+            </span>
+            <button type="button" id="drawer-close-btn" class="card-close-btn" aria-label="Close Navigation Menu">&times;</button>
+        </div>
+
+        <div class="optical-seam drawer-seam" aria-hidden="true"></div>
+
+        <nav class="drawer-nav" aria-label="Drawer Navigation">
+            <button type="button" id="drawer-home" class="drawer-primary-link active" data-drawer-target="home">
+                <span class="drawer-link-title">Home</span>
+                <span class="drawer-link-sub">Principal Office</span>
+            </button>
+
+            <div class="drawer-about-group">
+                <button type="button" id="drawer-about" class="drawer-primary-link" data-drawer-target="card-1">
+                    <span class="drawer-link-title">About</span>
+                    <span class="drawer-link-sub">01 &ndash; 04</span>
+                </button>
+
+                <div class="drawer-sublist" role="group" aria-label="About Sections">
+                    <button type="button" class="drawer-sublink" data-drawer-target="card-1">
+                        <span class="tab-num">01</span>
+                        <span>Mandate</span>
+                    </button>
+                    <button type="button" class="drawer-sublink" data-drawer-target="card-2">
+                        <span class="tab-num">02</span>
+                        <span>Prism AI</span>
+                    </button>
+                    <button type="button" class="drawer-sublink" data-drawer-target="card-3">
+                        <span class="tab-num">03</span>
+                        <span>Our Partners</span>
+                    </button>
+                    <button type="button" class="drawer-sublink" data-drawer-target="card-4">
+                        <span class="tab-num">04</span>
+                        <span>Disclaimers</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="drawer-legal-footer">
+            <span class="drawer-section-caption">Governance &amp; Contact</span>
+            <div class="drawer-legal-links">
+                <button type="button" class="drawer-legal-btn" data-drawer-target="card-privacy">Privacy Policy</button>
+                <span class="footer-sep" aria-hidden="true">&bull;</span>
+                <button type="button" class="drawer-legal-btn" data-drawer-target="card-terms">Terms of Use</button>
+            </div>
+            <a href="mailto:hello@pinkpony.tech" class="drawer-email-link">hello@pinkpony.tech</a>
+        </div>
+    </aside>
+
+    <!-- Interactive Equine Gait & Optical Effects Ribbon (Pinned directly under the horse on phone) -->
     <aside class="prism-dock" aria-label="Equine Motion and Optical Effects">
         <span class="dock-label">Gait</span>
         <div class="spectrum-pills" role="group" aria-label="Select Horse Motion or Optical Effect">
@@ -130,6 +197,9 @@
             <span class="spark-glyph" aria-hidden="true">&#10022;</span> Rear
         </button>
     </aside>
+
+    <!-- Scrollable Content Region below the Horse & Gait Ribbon on Phone (transparent wrapper on Desktop) -->
+    <div id="content-scroll-region" class="content-scroll-region">
 
     <!-- DEFAULT VIEW: Double-Bezel Frosted Optical-Glass Hero Chamber (Bottom-Right) -->
     <main id="hero-card" class="glass-shell">
@@ -166,7 +236,7 @@
     </main>
 
     <!-- ABOUT VIEW: Individual Detail Cards (Only ONE card opens at a time in the bottom-right) -->
-    <section id="about-stage" class="about-stage" aria-label="About Pink Pony Tech LLC">
+    <section id="about-stage" class="about-stage" aria-label="About Pink Pony Tech LLC" hidden>
 
         <!-- CARD 01: Mandate & Corporate Overview -->
         <article id="card-1" role="tabpanel" class="glass-detail-card spotlight-card" hidden>
@@ -394,9 +464,11 @@
         </p>
     </footer>
 
+    </div><!-- /.content-scroll-region -->
+
     <!-- Subtle Copy Confirmation Toast -->
     <div id="copy-toast" class="copy-toast" role="status" aria-live="polite" hidden>Copied to clipboard</div>
 
-    <script type="module" src="script.js?v=11"></script>
+    <script type="module" src="script.js?v=12"></script>
 </body>
 </html>
