@@ -149,12 +149,12 @@ SLIPSTREAM_SPECS.forEach((spec) => {
 horsePivot.add(slipstreamGroup);
 
 const textureLoader = new THREE.TextureLoader();
-const colorTex = textureLoader.load('arabian_glassmorph.webp?v=15');
+const colorTex = textureLoader.load('arabian_glassmorph.webp?v=16');
 colorTex.minFilter = THREE.LinearMipmapLinearFilter;
 colorTex.magFilter = THREE.LinearFilter;
 colorTex.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
 
-const reliefTex = textureLoader.load('arabian_glass_relief.webp?v=15');
+const reliefTex = textureLoader.load('arabian_glass_relief.webp?v=16');
 reliefTex.minFilter = THREE.LinearFilter;
 reliefTex.magFilter = THREE.LinearFilter;
 
@@ -353,7 +353,7 @@ const floorDisc = new THREE.Mesh(
     new THREE.MeshBasicMaterial({
         map: createOpticalFloorGlowTexture(),
         transparent: true,
-        opacity: 0.85,
+        opacity: 0.72,
         depthWrite: false
     })
 );
