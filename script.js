@@ -98,12 +98,12 @@ backdropAuraMesh.position.set(0.02, 0.04, -0.26);
 stageGroup.add(backdropAuraMesh);
 
 const textureLoader = new THREE.TextureLoader();
-const colorTex = textureLoader.load('arabian_glassmorph.webp?v=7');
+const colorTex = textureLoader.load('arabian_glassmorph.webp?v=8');
 colorTex.minFilter = THREE.LinearMipmapLinearFilter;
 colorTex.magFilter = THREE.LinearFilter;
 colorTex.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
 
-const reliefTex = textureLoader.load('arabian_glass_relief.webp?v=7');
+const reliefTex = textureLoader.load('arabian_glass_relief.webp?v=8');
 reliefTex.minFilter = THREE.LinearFilter;
 reliefTex.magFilter = THREE.LinearFilter;
 
@@ -231,8 +231,8 @@ const glassArabianMaterial = new THREE.ShaderMaterial({
     `
 });
 
-// Aspect ratio of cropped sculpture = 974 / 913 = 1.0668
-const arabianPlaneGeo = new THREE.PlaneGeometry(3.58, 3.36, 160, 160);
+// Aspect ratio of minimalist tech Show Arabian sculpture = 939 / 897 = 1.0468
+const arabianPlaneGeo = new THREE.PlaneGeometry(3.52, 3.36, 160, 160);
 const arabianMesh = new THREE.Mesh(arabianPlaneGeo, glassArabianMaterial);
 horsePivot.add(arabianMesh);
 
@@ -257,9 +257,9 @@ function createShowFloorGlowTexture() {
     return new THREE.CanvasTexture(c);
 }
 
-// Standing hooves rest cleanly at y = -1.50 in sculpture coordinates
+// Standing hooves rest cleanly at y = -1.515 in sculpture coordinates
 const showRingGroup = new THREE.Group();
-showRingGroup.position.set(-0.02, -1.50, -0.15);
+showRingGroup.position.set(-0.02, -1.52, -0.15);
 
 const floorDisc = new THREE.Mesh(
     new THREE.CircleGeometry(1.78, 84),
