@@ -149,12 +149,12 @@ SLIPSTREAM_SPECS.forEach((spec) => {
 horsePivot.add(slipstreamGroup);
 
 const textureLoader = new THREE.TextureLoader();
-const colorTex = textureLoader.load('arabian_glassmorph.webp?v=14');
+const colorTex = textureLoader.load('arabian_glassmorph.webp?v=15');
 colorTex.minFilter = THREE.LinearMipmapLinearFilter;
 colorTex.magFilter = THREE.LinearFilter;
 colorTex.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
 
-const reliefTex = textureLoader.load('arabian_glass_relief.webp?v=14');
+const reliefTex = textureLoader.load('arabian_glass_relief.webp?v=15');
 reliefTex.minFilter = THREE.LinearFilter;
 reliefTex.magFilter = THREE.LinearFilter;
 

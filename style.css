@@ -1283,41 +1283,53 @@ h1 em {
 }
 
 /* --- Phone-Only Side Hamburger Button & Slide-Out Frosted Glass Drawer ---
-   Hidden on desktop (> 900px) so it never duplicates the top-right Home / About capsule. */
+   Hidden on desktop (> 900px) so it never duplicates the top-right Home / About capsule.
+   Styled with rich rose-pink borders, blush-pearl fills & deep plum-ink contrast for crisp phone legibility. */
 .hamburger-trigger {
     display: none;
     position: fixed;
     top: 1.65rem;
     right: 5.5%;
     z-index: 65;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: var(--glass-pill-fill);
-    backdrop-filter: blur(28px) saturate(190%) brightness(1.03);
-    -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.03);
-    border: 1px solid var(--glass-border);
-    outline: 1px solid var(--glass-outline);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.96) 0%,
+        rgba(252, 231, 243, 0.90) 56%,
+        rgba(245, 208, 254, 0.78) 100%
+    );
+    backdrop-filter: blur(28px) saturate(195%);
+    -webkit-backdrop-filter: blur(28px) saturate(195%);
+    border: 1.5px solid rgba(219, 39, 119, 0.50);
+    outline: 2px solid rgba(244, 114, 182, 0.18);
     box-shadow:
-        inset 0 1.5px 1px var(--glass-highlight),
-        0 10px 26px rgba(118, 104, 138, 0.11);
+        inset 0 1.5px 1px #ffffff,
+        0 8px 22px rgba(219, 39, 119, 0.20);
     cursor: pointer;
     align-items: center;
     justify-content: center;
     transition: all 0.25s ease;
 }
 
-.hamburger-trigger:hover {
-    border-color: rgba(244, 114, 182, 0.44);
+.hamburger-trigger:hover,
+.hamburger-trigger.is-open {
+    border-color: rgba(190, 24, 93, 0.68);
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        rgba(251, 207, 232, 0.94) 60%,
+        rgba(243, 232, 255, 0.88) 100%
+    );
     box-shadow:
         inset 0 1.5px 1px #ffffff,
-        0 12px 28px rgba(236, 72, 153, 0.14);
-    transform: translateY(-1px);
+        0 10px 26px rgba(219, 39, 119, 0.28);
 }
 
 .hamburger-lines {
-    width: 17px;
-    height: 12px;
+    width: 18px;
+    height: 13px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1327,21 +1339,21 @@ h1 em {
 .hamburger-lines span {
     display: block;
     width: 100%;
-    height: 1.6px;
+    height: 2px;
     border-radius: 999px;
-    background: var(--ink-deep);
+    background: #831843;
     transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, background-color 0.2s ease;
 }
 
 .hamburger-lines span:nth-child(2) {
-    width: 78%;
+    width: 80%;
     margin-left: auto;
-    background: var(--pink-deep);
+    background: #db2777;
 }
 
 .hamburger-trigger.is-open .hamburger-lines span:nth-child(1) {
-    transform: translateY(5.2px) rotate(45deg);
-    background: var(--pink-deep);
+    transform: translateY(5.5px) rotate(45deg);
+    background: #be185d;
 }
 
 .hamburger-trigger.is-open .hamburger-lines span:nth-child(2) {
@@ -1349,8 +1361,8 @@ h1 em {
 }
 
 .hamburger-trigger.is-open .hamburger-lines span:nth-child(3) {
-    transform: translateY(-5.2px) rotate(-45deg);
-    background: var(--pink-deep);
+    transform: translateY(-5.5px) rotate(-45deg);
+    background: #be185d;
 }
 
 .drawer-backdrop {
@@ -1358,9 +1370,9 @@ h1 em {
     position: fixed;
     inset: 0;
     z-index: 58;
-    background: rgba(36, 27, 34, 0.14);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: rgba(42, 18, 34, 0.30);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     animation: backdropFade 0.22s ease forwards;
 }
 
@@ -1384,25 +1396,30 @@ h1 em {
     padding: 1.45rem 1.35rem 1.35rem;
     border-radius: 26px;
     background: linear-gradient(
-        152deg,
-        rgba(255, 255, 255, 0.86) 0%,
-        rgba(252, 250, 255, 0.78) 52%,
-        rgba(255, 245, 251, 0.84) 100%
+        155deg,
+        rgba(255, 255, 255, 0.97) 0%,
+        rgba(253, 242, 248, 0.95) 54%,
+        rgba(250, 232, 255, 0.93) 100%
     );
-    backdrop-filter: blur(38px) saturate(195%) brightness(1.03);
-    -webkit-backdrop-filter: blur(38px) saturate(195%) brightness(1.03);
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    outline: 1px solid var(--glass-outline);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border: 1.5px solid rgba(236, 72, 153, 0.46);
+    outline: 1px solid rgba(255, 255, 255, 0.92);
     box-shadow:
         inset 0 1.5px 1px #ffffff,
-        -18px 24px 64px rgba(84, 68, 102, 0.18),
-        0 6px 22px rgba(236, 72, 153, 0.08);
+        -18px 24px 64px rgba(131, 24, 67, 0.22),
+        0 6px 24px rgba(236, 72, 153, 0.16);
     flex-direction: column;
     overflow-y: auto;
     transform: translateX(calc(100% + 1.5rem));
     opacity: 0;
     pointer-events: none;
     transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease;
+}
+
+.side-glass-drawer .prism-top-edge {
+    height: 2.5px;
+    background: linear-gradient(90deg, #ec4899, #f472b6, #fde68a, #38bdf8, #a855f7, #ec4899);
 }
 
 .side-glass-drawer.is-open {
@@ -1416,17 +1433,31 @@ h1 em {
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.85rem;
+}
+
+.drawer-header .telemetry-tag {
+    color: #9d174d;
+    font-weight: 600;
+    font-size: 0.68rem;
+}
+
+.drawer-header .card-close-btn {
+    background: rgba(252, 231, 243, 0.88);
+    border: 1.5px solid rgba(219, 39, 119, 0.42);
+    color: #9d174d;
+    font-weight: 600;
 }
 
 .drawer-seam {
+    height: 1.5px;
     margin-bottom: 1rem;
 }
 
 .drawer-nav {
     display: flex;
     flex-direction: column;
-    gap: 0.55rem;
+    gap: 0.6rem;
     flex: 1;
 }
 
@@ -1436,165 +1467,197 @@ h1 em {
     align-items: baseline;
     justify-content: space-between;
     gap: 0.5rem;
-    padding: 0.68rem 0.92rem;
+    padding: 0.72rem 0.96rem;
     border-radius: 15px;
-    background: rgba(255, 255, 255, 0.56);
-    border: 1px solid rgba(255, 255, 255, 0.88);
-    color: var(--ink-deep);
+    background: rgba(255, 255, 255, 0.86);
+    border: 1px solid rgba(236, 72, 153, 0.28);
+    color: #1e121b;
     font-family: 'DM Sans', sans-serif;
     cursor: pointer;
     text-align: left;
+    box-shadow: 0 2px 8px rgba(219, 39, 119, 0.06);
     transition: all 0.2s ease;
 }
 
 .drawer-primary-link:hover {
-    background: rgba(255, 255, 255, 0.88);
-    border-color: rgba(244, 114, 182, 0.34);
+    background: rgba(253, 242, 248, 0.96);
+    border-color: rgba(219, 39, 119, 0.46);
 }
 
 .drawer-primary-link.active {
     background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.95) 0%,
-        rgba(252, 231, 243, 0.72) 58%,
-        rgba(237, 233, 254, 0.56) 100%
+        #fff5fa 0%,
+        rgba(251, 207, 232, 0.88) 58%,
+        rgba(243, 232, 255, 0.84) 100%
     );
-    border-color: rgba(236, 72, 153, 0.40);
+    border: 1.5px solid rgba(219, 39, 119, 0.58);
     box-shadow:
         inset 0 1px 0 #ffffff,
-        0 4px 12px rgba(236, 72, 153, 0.10);
+        0 6px 16px rgba(219, 39, 119, 0.16);
 }
 
 .drawer-link-title {
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    color: #1e121b;
 }
 
 .drawer-primary-link.active .drawer-link-title {
-    color: var(--pink-deep);
+    color: #9d174d;
 }
 
 .drawer-link-sub {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
+    font-size: 0.64rem;
+    font-weight: 500;
     letter-spacing: 0.08em;
-    color: var(--ink-soft);
+    color: #be185d;
     text-transform: uppercase;
 }
 
 .drawer-about-group {
     display: flex;
     flex-direction: column;
-    gap: 0.42rem;
+    gap: 0.48rem;
 }
 
 .drawer-sublist {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.36rem;
     margin-left: 0.65rem;
-    padding-left: 0.75rem;
-    border-left: 1.5px solid rgba(244, 114, 182, 0.28);
+    padding-left: 0.8rem;
+    border-left: 2px solid rgba(236, 72, 153, 0.52);
 }
 
 .drawer-sublink {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 0.56rem;
-    padding: 0.52rem 0.78rem;
+    gap: 0.58rem;
+    padding: 0.56rem 0.82rem;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.48);
-    border: 1px solid transparent;
-    color: var(--ink-body);
+    background: rgba(255, 255, 255, 0.84);
+    border: 1px solid rgba(244, 114, 182, 0.26);
+    color: #261622;
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 500;
+    font-size: 0.85rem;
+    font-weight: 600;
     cursor: pointer;
     text-align: left;
     transition: all 0.18s ease;
 }
 
+.drawer-sublink .tab-num {
+    background: rgba(252, 231, 243, 0.92);
+    border: 1px solid rgba(236, 72, 153, 0.38);
+    color: #be185d;
+    font-weight: 600;
+    font-size: 0.66rem;
+    padding: 0.08rem 0.38rem;
+    border-radius: 6px;
+}
+
 .drawer-sublink:hover {
-    color: var(--ink-deep);
-    background: rgba(255, 255, 255, 0.86);
-    border-color: rgba(244, 114, 182, 0.30);
+    color: #9d174d;
+    background: rgba(253, 242, 248, 0.96);
+    border-color: rgba(219, 39, 119, 0.44);
     transform: translateX(2px);
 }
 
 .drawer-sublink.active {
-    color: var(--pink-deep);
+    color: #9d174d;
     font-weight: 600;
     background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.94) 0%,
-        rgba(252, 231, 243, 0.68) 62%,
-        rgba(224, 242, 254, 0.48) 100%
+        #fff5fa 0%,
+        rgba(251, 207, 232, 0.88) 62%,
+        rgba(243, 232, 255, 0.80) 100%
     );
-    border-color: rgba(236, 72, 153, 0.38);
-    box-shadow: 0 3px 10px rgba(236, 72, 153, 0.09);
+    border: 1.5px solid rgba(219, 39, 119, 0.56);
+    box-shadow: 0 4px 12px rgba(219, 39, 119, 0.15);
+}
+
+.drawer-sublink.active .tab-num {
+    background: #db2777;
+    border-color: #be185d;
+    color: #ffffff;
 }
 
 .drawer-legal-footer {
     margin-top: 1.1rem;
-    padding-top: 0.9rem;
-    border-top: 1px solid rgba(148, 130, 156, 0.18);
+    padding-top: 0.95rem;
+    border-top: 1.5px solid rgba(236, 72, 153, 0.26);
     display: flex;
     flex-direction: column;
-    gap: 0.38rem;
+    gap: 0.46rem;
 }
 
 .drawer-section-caption {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.63rem;
+    font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--ink-soft);
+    color: #9d174d;
 }
 
 .drawer-legal-links {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
+}
+
+.drawer-legal-links .footer-sep {
+    color: #ec4899;
 }
 
 .drawer-legal-btn {
     background: none;
     border: none;
-    padding: 0.12rem 0;
+    padding: 0.14rem 0;
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.76rem;
-    font-weight: 500;
-    color: var(--ink-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #2b1927;
     cursor: pointer;
     transition: color 0.18s ease;
 }
 
 .drawer-legal-btn:hover,
 .drawer-legal-btn.active {
-    color: var(--pink-deep);
+    color: #be185d;
     text-decoration: underline;
 }
 
 .drawer-email-link {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.28rem 0.68rem;
+    border-radius: 999px;
+    background: rgba(252, 231, 243, 0.85);
+    border: 1px solid rgba(219, 39, 119, 0.36);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
-    color: var(--pink-deep);
+    color: #9d174d;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .drawer-email-link:hover {
+    background: rgba(251, 207, 232, 0.98);
     text-decoration: underline;
 }
 
-/* --- Phone & Tablet Split-Stage Layout ---
+/* --- Phone & Tablet Split-Stage Layout (High-Contrast Rose & Mother-of-Pearl) ---
    1. Upper Horse Stage + Gait Ribbon ('Poise / Prance / Prism / Rear') stay pinned and NEVER scroll up.
    2. Everything underneath the ribbon scrolls smoothly in its own dedicated lower scroll viewport.
-   3. Top-right Side Hamburger Menu handles Home, About, and all items under About. */
+   3. Top-right Side Hamburger Menu & cards feature rich pink accents and deep plum-ink contrast. */
 @media (max-width: 900px) {
     :root {
         --mobile-stage-h: clamp(210px, 35dvh, 305px);
@@ -1610,6 +1673,10 @@ h1 em {
     body {
         display: block;
         padding: 0;
+        background:
+            radial-gradient(circle at 50% 18%, #ffffff 0%, rgba(253, 242, 248, 0.86) 46%, rgba(252, 231, 243, 0) 76%),
+            radial-gradient(ellipse at 85% 78%, rgba(251, 207, 232, 0.55) 0%, rgba(243, 232, 255, 0.35) 55%, transparent 82%),
+            linear-gradient(160deg, #fffafc 0%, #fdf2f8 52%, #f8eefc 100%);
     }
 
     /* Hide multi-pill top bar on phone in favor of the clean side hamburger menu */
@@ -1621,8 +1688,8 @@ h1 em {
         display: inline-flex;
         top: calc(env(safe-area-inset-top, 0px) + 0.8rem);
         right: 0.95rem;
-        width: 42px;
-        height: 42px;
+        width: 44px;
+        height: 44px;
     }
 
     .drawer-backdrop:not([hidden]) {
@@ -1634,7 +1701,7 @@ h1 em {
         top: calc(env(safe-area-inset-top, 0px) + 0.6rem);
         bottom: calc(env(safe-area-inset-bottom, 0px) + 0.6rem);
         right: 0.6rem;
-        width: min(305px, calc(100vw - 1.2rem));
+        width: min(308px, calc(100vw - 1.2rem));
     }
 
     /* 1. Fixed Upper 3D Horse Stage */
@@ -1656,9 +1723,14 @@ h1 em {
         top: calc(env(safe-area-inset-top, 0px) + (var(--mobile-stage-h) * 0.50));
         left: 50%;
         transform: translate(-50%, -50%);
+        border: 1.5px solid rgba(236, 72, 153, 0.28);
+        box-shadow:
+            0 0 0 1px rgba(255, 255, 255, 0.90),
+            inset 0 1px 24px rgba(255, 255, 255, 0.88),
+            0 16px 42px rgba(219, 39, 119, 0.12);
     }
 
-    /* 2. Pinned Gait Ribbon Directly Under the Horse (Never scrolls!) */
+    /* 2. Pinned Gait Ribbon Directly Under the Horse (Rich pink trim & crisp text) */
     .prism-dock {
         position: fixed;
         top: calc(env(safe-area-inset-top, 0px) + var(--mobile-stage-h) + 0.08rem);
@@ -1670,8 +1742,14 @@ h1 em {
         flex-wrap: nowrap;
         white-space: nowrap;
         max-width: calc(100vw - 1rem);
-        padding: 0.3rem 0.46rem;
+        padding: 0.32rem 0.48rem;
         gap: 0.24rem;
+        background: rgba(255, 250, 253, 0.94);
+        border: 1.5px solid rgba(236, 72, 153, 0.44);
+        outline: 1px solid rgba(255, 255, 255, 0.92);
+        box-shadow:
+            inset 0 1.5px 1px #ffffff,
+            0 10px 24px rgba(190, 24, 93, 0.15);
     }
 
     .dock-label {
@@ -1679,14 +1757,43 @@ h1 em {
     }
 
     .spectrum-btn {
-        padding: 0.26rem 0.5rem;
-        font-size: 0.7rem;
-        gap: 0.26rem;
+        padding: 0.28rem 0.54rem;
+        font-size: 0.73rem;
+        font-weight: 600;
+        color: #2b1927;
+        gap: 0.28rem;
+    }
+
+    .spectrum-btn.active {
+        color: #9d174d;
+        background: linear-gradient(
+            135deg,
+            #ffffff 0%,
+            rgba(252, 231, 243, 0.92) 70%,
+            rgba(243, 232, 255, 0.82) 100%
+        );
+        border: 1.5px solid rgba(219, 39, 119, 0.54);
+        box-shadow:
+            inset 0 1px 0 #ffffff,
+            0 2px 9px rgba(219, 39, 119, 0.18);
+    }
+
+    .dock-divider {
+        background: rgba(236, 72, 153, 0.36);
     }
 
     .pulse-btn {
-        padding: 0.26rem 0.58rem;
-        font-size: 0.7rem;
+        padding: 0.28rem 0.62rem;
+        font-size: 0.73rem;
+        font-weight: 600;
+        color: #9d174d;
+        background: linear-gradient(
+            135deg,
+            #fff5fa 0%,
+            rgba(251, 207, 232, 0.90) 60%,
+            rgba(243, 232, 255, 0.82) 100%
+        );
+        border: 1.5px solid rgba(219, 39, 119, 0.52);
     }
 
     /* 3. Dedicated Scrollable Viewport for Everything Underneath the Ribbon */
@@ -1695,7 +1802,7 @@ h1 em {
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
-        gap: 1.15rem;
+        gap: 1.05rem;
         position: fixed;
         top: calc(env(safe-area-inset-top, 0px) + var(--mobile-stage-h) + var(--mobile-dock-h));
         bottom: 0;
@@ -1707,8 +1814,8 @@ h1 em {
         overscroll-behavior-y: contain;
         padding: 0.85rem 0.9rem calc(2rem + env(safe-area-inset-bottom, 0px));
         z-index: 20;
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0px, #000 14px);
-        mask-image: linear-gradient(to bottom, transparent 0px, #000 14px);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0px, #000 12px);
+        mask-image: linear-gradient(to bottom, transparent 0px, #000 12px);
     }
 
     .glass-shell {
@@ -1720,10 +1827,91 @@ h1 em {
         margin-top: 0;
         flex-shrink: 0;
         animation: none;
+        padding: 6px;
+        background: linear-gradient(
+            135deg,
+            rgba(251, 207, 232, 0.72) 0%,
+            rgba(244, 114, 182, 0.34) 48%,
+            rgba(216, 180, 254, 0.38) 100%
+        );
+        border: 1px solid rgba(236, 72, 153, 0.42);
+        box-shadow:
+            0 18px 42px rgba(157, 23, 77, 0.14),
+            inset 0 1px 0 rgba(255, 255, 255, 0.95);
     }
 
     .glass-chamber {
         padding: 1.5rem 1.4rem;
+        background: linear-gradient(
+            152deg,
+            rgba(255, 255, 255, 0.96) 0%,
+            rgba(255, 247, 251, 0.94) 56%,
+            rgba(253, 240, 248, 0.92) 100%
+        );
+        border: 1px solid rgba(244, 114, 182, 0.34);
+    }
+
+    .prism-top-edge {
+        height: 2.5px;
+        background: linear-gradient(90deg, #ec4899, #f472b6, #fde68a, #38bdf8, #a855f7, #ec4899);
+    }
+
+    .optical-seam {
+        height: 1.5px;
+    }
+
+    .telemetry-tag {
+        color: #9d174d;
+        font-weight: 600;
+        font-size: 0.65rem;
+    }
+
+    .alpha-pill {
+        background: rgba(252, 231, 243, 0.88);
+        border: 1px solid rgba(219, 39, 119, 0.42);
+        color: #831843;
+        font-weight: 600;
+    }
+
+    .brand-name {
+        color: #9d174d;
+        font-weight: 600;
+    }
+
+    .hero-statement {
+        color: #231420;
+        font-size: 0.93rem;
+        font-weight: 450;
+        line-height: 1.6;
+    }
+
+    .entity-note {
+        color: #9d174d;
+        font-weight: 600;
+        font-size: 0.65rem;
+        background: rgba(252, 231, 243, 0.72);
+        border: 1px solid rgba(244, 114, 182, 0.34);
+        padding: 0.22rem 0.58rem;
+        border-radius: 999px;
+    }
+
+    .about-trigger-pill {
+        width: 100%;
+        justify-content: space-between;
+        padding: 0.64rem 1.15rem;
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: #831843;
+        background: linear-gradient(
+            135deg,
+            #fff5fa 0%,
+            rgba(251, 207, 232, 0.88) 58%,
+            rgba(243, 232, 255, 0.82) 100%
+        );
+        border: 1.5px solid rgba(219, 39, 119, 0.52);
+        box-shadow:
+            inset 0 1px 0 #ffffff,
+            0 6px 16px rgba(219, 39, 119, 0.14);
     }
 
     .chamber-footer {
@@ -1745,9 +1933,79 @@ h1 em {
     }
 
     .glass-detail-card {
-        padding: 1.35rem 1.3rem;
+        padding: 1.4rem 1.35rem;
         max-height: none;
         overflow-y: visible;
+        background: linear-gradient(
+            152deg,
+            rgba(255, 255, 255, 0.96) 0%,
+            rgba(255, 247, 251, 0.94) 54%,
+            rgba(253, 240, 248, 0.92) 100%
+        );
+        border: 1.5px solid rgba(236, 72, 153, 0.42);
+        box-shadow:
+            inset 0 1.5px 1px #ffffff,
+            0 18px 42px rgba(157, 23, 77, 0.14);
+    }
+
+    .card-badge {
+        color: #be185d;
+        font-weight: 600;
+    }
+
+    .card-close-btn {
+        background: rgba(252, 231, 243, 0.88);
+        border: 1.5px solid rgba(219, 39, 119, 0.42);
+        color: #9d174d;
+    }
+
+    .card-lead {
+        color: #231420;
+        font-size: 0.87rem;
+        line-height: 1.58;
+    }
+
+    .card-points li {
+        color: #281724;
+        font-size: 0.83rem;
+        line-height: 1.54;
+    }
+
+    .card-points li::before {
+        width: 6.5px;
+        height: 6.5px;
+        background: #ec4899;
+        box-shadow: 0 0 6px rgba(236, 72, 153, 0.55);
+    }
+
+    .partners-list-box,
+    .card-contact-strip {
+        background: rgba(253, 242, 248, 0.72);
+        border: 1px solid rgba(244, 114, 182, 0.34);
+    }
+
+    .strip-label,
+    .status-tag {
+        color: #831843;
+        font-weight: 600;
+    }
+
+    .card-step-btn {
+        background: linear-gradient(
+            135deg,
+            #fff5fa 0%,
+            rgba(251, 207, 232, 0.90) 60%,
+            rgba(243, 232, 255, 0.82) 100%
+        );
+        border: 1.5px solid rgba(219, 39, 119, 0.52);
+        color: #9d174d;
+    }
+
+    .card-step-btn.secondary {
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(236, 72, 153, 0.36);
+        color: #4a2c42;
+        font-weight: 600;
     }
 
     .legal-scroll-area {
@@ -1761,19 +2019,40 @@ h1 em {
     }
 
     h1 {
-        font-size: 2.65rem;
+        font-size: 2.7rem;
+        color: #1a0f18;
     }
 
     .company-footer {
         position: relative;
         bottom: auto;
-        margin-top: 0.25rem;
-        padding: 0 0.5rem;
+        width: 100%;
+        max-width: 450px;
+        margin-top: 0.15rem;
+        padding: 0.78rem 1rem;
+        border-radius: 18px;
+        background: rgba(255, 250, 253, 0.92);
+        border: 1px solid rgba(244, 114, 182, 0.36);
+        box-shadow: 0 8px 20px rgba(157, 23, 77, 0.08);
         flex-shrink: 0;
     }
 
     .company-footer p {
-        font-size: 0.72rem;
-        line-height: 1.6;
+        font-size: 0.74rem;
+        line-height: 1.65;
+        color: #3b2335;
+    }
+
+    .company-footer p strong {
+        color: #9d174d;
+    }
+
+    .company-footer a {
+        color: #be185d;
+        font-weight: 600;
+    }
+
+    .footer-sep {
+        color: rgba(236, 72, 153, 0.55);
     }
 }
