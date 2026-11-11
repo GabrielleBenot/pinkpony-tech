@@ -1,13 +1,14 @@
 import * as THREE from 'three';
 
 // ============================================================================
-// 1. THREE.JS SCENE, CAMERA & TRANSPARENT OPTICAL-GLASS STAGE
+// 1. THREE.JS SCENE, CAMERA & TRANSPARENT PEARL-WHITE OPTICAL STAGE
 // ============================================================================
 const container = document.getElementById('canvas-container');
 const scene = new THREE.Scene();
 
+// Slightly closer focal perspective (44° FOV) heightens real 3D foreshortening as the horse turns
 const camera = new THREE.PerspectiveCamera(
-    40,
+    44,
     window.innerWidth / window.innerHeight,
     0.1,
     100
@@ -27,17 +28,17 @@ if (container) {
 }
 
 // ============================================================================
-// 2. HORSE-CONNECTED MODES: POISE (DEFAULT) / PRANCE (GAIT) / PRISM (DISPERSION)
+// 2. HORSE-CONNECTED MODES: POISE (PEARL WHITE) / PRANCE (GAIT) / PRISM (OPTICS)
 // ============================================================================
 const MODES = {
     poise: {
-        prismA: '#f9a8d4',
-        prismB: '#bae6fd',
-        prismC: '#ddd6fe',
+        prismA: '#fef9c3',
+        prismB: '#e0f2fe',
+        prismC: '#fce7f3',
         tintMix: 0.0,
         tintColor: '#ffffff',
-        arcPrimary: '#f472b6',
-        arcSecondary: '#c4b5fd',
+        arcPrimary: '#cbd5e1',
+        arcSecondary: '#e5b8cb',
         pranceStrength: 0.0,
         prismDispersion: 0.0,
         slipstreamOpacity: 0.0,
@@ -45,51 +46,50 @@ const MODES = {
         arcSpeed: 1.0
     },
     prance: {
-        prismA: '#ec4899',
-        prismB: '#fbcfe8',
-        prismC: '#bae6fd',
-        tintMix: 0.08,
-        tintColor: '#fce7f3',
-        arcPrimary: '#ec4899',
-        arcSecondary: '#f9a8d4',
+        prismA: '#f5d0df',
+        prismB: '#e0f2fe',
+        prismC: '#fef3c7',
+        tintMix: 0.04,
+        tintColor: '#fffafc',
+        arcPrimary: '#d88aa9',
+        arcSecondary: '#cbd5e1',
         pranceStrength: 1.0,
-        prismDispersion: 0.18,
-        slipstreamOpacity: 0.62,
-        coronaOpacity: 0.18,
+        prismDispersion: 0.16,
+        slipstreamOpacity: 0.55,
+        coronaOpacity: 0.14,
         arcSpeed: 3.6
     },
     prism: {
-        prismA: '#f43f8e',
-        prismB: '#38bdf8',
-        prismC: '#a855f7',
-        tintMix: 0.06,
-        tintColor: '#fdf4ff',
-        arcPrimary: '#db2777',
-        arcSecondary: '#38bdf8',
-        pranceStrength: 0.18,
+        prismA: '#f9a8d4',
+        prismB: '#7dd3fc',
+        prismC: '#fde68a',
+        tintMix: 0.04,
+        tintColor: '#ffffff',
+        arcPrimary: '#c97a9b',
+        arcSecondary: '#7dd3fc',
+        pranceStrength: 0.16,
         prismDispersion: 1.0,
         slipstreamOpacity: 0.0,
-        coronaOpacity: 0.88,
+        coronaOpacity: 0.72,
         arcSpeed: 1.6
     }
 };
 
 // ============================================================================
-// 3. LAYERED OPTICAL-GLASS ARABIAN + HIND-HOOF LEVADE PIVOT + GAIT SHADER
+// 3. VOLUMETRIC MULTI-SHELL OPTICAL-GLASS ARABIAN + DEEP 3D TURN ARCHITECTURE
 // ============================================================================
 const stageGroup = new THREE.Group();
 const horsePivot = new THREE.Group();
 stageGroup.add(horsePivot);
 
-// Dedicated Levade / Rear pivot anchored directly at the standing hind hoof (-1.064, -1.475)
-// so clicking 'Rear' lifts the Arabian's forehand proudly while its hind hoof stays planted!
+// Dedicated Levade / Rear pivot anchored at the standing hind hoof (-1.064, -1.475)
 const HIND_HOOF_X = -1.064;
 const HIND_HOOF_Y = -1.475;
 const rearPivot = new THREE.Group();
 rearPivot.position.set(HIND_HOOF_X, HIND_HOOF_Y, 0);
 horsePivot.add(rearPivot);
 
-// Rainbow-Pearl Corona Halo behind the sculpture (blooms in 'Prism' mode & during 'Rear')
+// Soft Mother-of-Pearl Corona Halo behind the sculpture (blooms in 'Prism' mode & during 'Rear')
 function createPrismCoronaTexture() {
     const c = document.createElement('canvas');
     c.width = 512;
@@ -97,10 +97,10 @@ function createPrismCoronaTexture() {
     const ctx = c.getContext('2d');
 
     const g = ctx.createRadialGradient(264, 240, 24, 256, 256, 248);
-    g.addColorStop(0.0, 'rgba(244, 114, 182, 0.34)');
-    g.addColorStop(0.32, 'rgba(192, 132, 252, 0.26)');
-    g.addColorStop(0.58, 'rgba(125, 211, 252, 0.22)');
-    g.addColorStop(0.80, 'rgba(253, 230, 138, 0.14)');
+    g.addColorStop(0.0, 'rgba(255, 253, 245, 0.55)');
+    g.addColorStop(0.32, 'rgba(224, 242, 254, 0.28)');
+    g.addColorStop(0.58, 'rgba(252, 231, 243, 0.22)');
+    g.addColorStop(0.80, 'rgba(237, 233, 254, 0.16)');
     g.addColorStop(1.0, 'rgba(255, 255, 255, 0.0)');
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, 512, 512);
@@ -115,17 +115,17 @@ const coronaMat = new THREE.MeshBasicMaterial({
     depthWrite: false
 });
 const coronaMesh = new THREE.Mesh(new THREE.PlaneGeometry(4.35, 4.05), coronaMat);
-coronaMesh.position.set(0.05, 0.08, -0.24);
+coronaMesh.position.set(0.05, 0.08, -0.34);
 horsePivot.add(coronaMesh);
 
-// Sleek Aerodynamic Slipstream Ribbons (glide past the Arabian in 'Prance' mode!)
+// Sleek Pearl-Silver & Rose-Nacre Slipstream Ribbons (glide past in 'Prance' mode)
 const slipstreamGroup = new THREE.Group();
-slipstreamGroup.position.z = -0.10;
+slipstreamGroup.position.z = -0.16;
 const slipstreams = [];
 
 const SLIPSTREAM_SPECS = [
-    { y: 0.78, xBase: -0.35, len: 1.55, amp: 0.045, speed: 2.8, phase: 0.0, color: '#f472b6' },
-    { y: 0.14, xBase: -0.55, len: 1.85, amp: 0.055, speed: 3.2, phase: 2.1, color: '#c084fc' },
+    { y: 0.78, xBase: -0.35, len: 1.55, amp: 0.045, speed: 2.8, phase: 0.0, color: '#dfa0b8' },
+    { y: 0.14, xBase: -0.55, len: 1.85, amp: 0.055, speed: 3.2, phase: 2.1, color: '#94a3b8' },
     { y: -0.46, xBase: -0.40, len: 1.40, amp: 0.038, speed: 2.5, phase: 4.2, color: '#7dd3fc' }
 ];
 
@@ -149,184 +149,250 @@ SLIPSTREAM_SPECS.forEach((spec) => {
 horsePivot.add(slipstreamGroup);
 
 const textureLoader = new THREE.TextureLoader();
-const colorTex = textureLoader.load('arabian_glassmorph.webp?v=10');
+const colorTex = textureLoader.load('arabian_glassmorph.webp?v=11');
 colorTex.minFilter = THREE.LinearMipmapLinearFilter;
 colorTex.magFilter = THREE.LinearFilter;
 colorTex.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
 
-const reliefTex = textureLoader.load('arabian_glass_relief.webp?v=10');
+const reliefTex = textureLoader.load('arabian_glass_relief.webp?v=11');
 reliefTex.minFilter = THREE.LinearFilter;
 reliefTex.magFilter = THREE.LinearFilter;
 
-const glassArabianUniforms = {
-    uColorMap: { value: colorTex },
-    uReliefMap: { value: reliefTex },
-    uTime: { value: 0.0 },
-    uReliefDepth: { value: 0.22 },
-    uMouse: { value: new THREE.Vector2(0.0, 0.0) },
-    uTilt: { value: new THREE.Vector2(0.0, 0.0) },
-    uPrance: { value: 0.0 },
-    uRear: { value: 0.0 },
-    uDispersion: { value: 0.0 },
-    uPulse: { value: 0.0 },
-    uPrismA: { value: new THREE.Color(MODES.poise.prismA) },
-    uPrismB: { value: new THREE.Color(MODES.poise.prismB) },
-    uPrismC: { value: new THREE.Color(MODES.poise.prismC) },
-    uTintColor: { value: new THREE.Color(MODES.poise.tintColor) },
-    uTintMix: { value: MODES.poise.tintMix }
-};
+const VERTEX_SHADER = /* glsl */ `
+    uniform sampler2D uReliefMap;
+    uniform float uReliefDepth;
+    uniform float uLayerZ;
+    uniform float uTime;
+    uniform float uPrance;
+    uniform float uRear;
 
-const glassArabianMaterial = new THREE.ShaderMaterial({
-    uniforms: glassArabianUniforms,
-    transparent: true,
-    depthWrite: false,
-    vertexShader: /* glsl */ `
-        uniform sampler2D uReliefMap;
-        uniform float uReliefDepth;
-        uniform float uTime;
-        uniform float uPrance;
-        uniform float uRear;
+    varying vec2 vUv;
 
-        varying vec2 vUv;
+    // Separates near/far equine limbs, arched neck ribbon, torso & tail in real 3D Z-space
+    // so turning the sculpture produces authentic multi-plane parallax between legs & body!
+    float computeEquineDepth(vec2 uv, float relief) {
+        float mask = smoothstep(0.01, 0.28, relief);
 
-        void main() {
-            vUv = uv;
-            float relief = texture2D(uReliefMap, uv).a;
+        // Near lifted right foreleg steps forward (+Z); far planted left foreleg sits back (-Z)
+        float nearForeleg = smoothstep(0.68, 0.77, uv.x) * smoothstep(0.52, 0.28, uv.y);
+        float farForeleg  = smoothstep(0.54, 0.61, uv.x) * smoothstep(0.69, 0.62, uv.x) * smoothstep(0.50, 0.22, uv.y);
 
-            vec3 pos = position;
-            pos.z += relief * uReliefDepth;
+        // Near planted right hind leg & sculpted hip (+Z); far lifted left hind leg recessed (-Z)
+        float nearHind    = smoothstep(0.21, 0.28, uv.x) * smoothstep(0.39, 0.33, uv.x) * smoothstep(0.58, 0.16, uv.y);
+        float farHind     = smoothstep(0.37, 0.43, uv.x) * smoothstep(0.52, 0.46, uv.x) * smoothstep(0.46, 0.18, uv.y);
 
-            // 1. Flowing glass ribbon tail motion (calm in Poise, spirited in Prance & Rear)
-            float tailZone = smoothstep(0.30, 0.03, uv.x) * smoothstep(0.18, 0.42, uv.y);
-            float tailWave = sin(uTime * (1.3 + uPrance * 2.8) + uv.y * 5.6);
-            pos.z += tailWave * (0.012 + uPrance * 0.026) * tailZone * relief;
-            pos.y += sin(uTime * 3.6 - uv.x * 6.0) * 0.038 * uPrance * tailZone;
+        // Sweeping foreground shoulder-to-swan-neck glass ribbon & proud cheek (+Z)
+        float neckRibbon  = smoothstep(0.50, 0.68, uv.x) * smoothstep(0.44, 0.78, uv.y) * smoothstep(0.92, 0.72, uv.x);
+        float haunchDome  = smoothstep(0.26, 0.38, uv.x) * smoothstep(0.54, 0.40, uv.x) * smoothstep(0.38, 0.62, uv.y);
 
-            // 2. 'Prance' Mode: Articulated Arabian Passage foreleg reach, hind-step & arched neck nod
-            if (uPrance > 0.005) {
-                float gaitPhase = uTime * 3.8;
-                // Lifted right foreleg (uv.x > 0.70, uv.y < 0.49) extends & elevates rhythmically
-                float liftedForeleg = smoothstep(0.69, 0.77, uv.x) * smoothstep(0.50, 0.34, uv.y);
-                float kneeReach = sin(gaitPhase);
-                pos.y += (0.045 + 0.055 * kneeReach) * liftedForeleg * uPrance;
-                pos.x += (0.025 + 0.035 * cos(gaitPhase)) * liftedForeleg * uPrance;
+        // Flowing glass ribbon tail curves gracefully in Z
+        float tailCurve   = smoothstep(0.30, 0.05, uv.x) * smoothstep(0.18, 0.66, uv.y) * sin(uv.y * 4.2 - 0.6);
 
-                // Lifted hind leg (0.25 < uv.x < 0.49, uv.y < 0.44) counter-cadence
-                float liftedHind = smoothstep(0.24, 0.32, uv.x) * smoothstep(0.50, 0.40, uv.x) * smoothstep(0.45, 0.28, uv.y);
-                pos.y += (0.035 - 0.040 * kneeReach) * liftedHind * uPrance;
+        float zAnat = nearForeleg * 0.24
+                    - farForeleg  * 0.22
+                    + nearHind    * 0.17
+                    - farHind     * 0.20
+                    + neckRibbon  * 0.18
+                    + haunchDome  * 0.12
+                    + tailCurve   * 0.12;
 
-                // Proud Arabian swan-neck & head collection nod (uv.x > 0.58, uv.y > 0.56)
-                float headNeck = smoothstep(0.56, 0.74, uv.x) * smoothstep(0.54, 0.76, uv.y);
-                pos.y += sin(gaitPhase + 0.8) * 0.032 * headNeck * uPrance;
-                pos.x -= cos(gaitPhase + 0.8) * 0.018 * headNeck * uPrance;
-            }
+        return (relief * uReliefDepth + zAnat) * mask;
+    }
 
-            // 3. 'Rear' (Levade) Action: Extra foreleg tuck & proud arched neck lift at peak of rear
-            if (uRear > 0.005) {
-                float foreTuck = smoothstep(0.68, 0.78, uv.x) * smoothstep(0.52, 0.30, uv.y);
-                pos.y += 0.09 * foreTuck * uRear;
-                pos.x -= 0.03 * foreTuck * uRear;
-            }
+    void main() {
+        vUv = uv;
+        float relief = texture2D(uReliefMap, uv).a;
 
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-        }
-    `,
-    fragmentShader: /* glsl */ `
-        uniform sampler2D uColorMap;
-        uniform sampler2D uReliefMap;
-        uniform float uTime;
-        uniform vec2 uMouse;
-        uniform vec2 uTilt;
-        uniform float uDispersion;
-        uniform float uPulse;
-        uniform vec3 uPrismA;
-        uniform vec3 uPrismB;
-        uniform vec3 uPrismC;
-        uniform vec3 uTintColor;
-        uniform float uTintMix;
+        vec3 pos = position;
+        // Volumetric slab offset + sculpted anatomical 3D relief
+        pos.z += computeEquineDepth(uv, relief) + uLayerZ * smoothstep(0.01, 0.22, relief);
 
-        varying vec2 vUv;
+        // 1. Flowing glass ribbon tail motion (calm in Poise, spirited in Prance & Rear)
+        float tailZone = smoothstep(0.30, 0.03, uv.x) * smoothstep(0.18, 0.42, uv.y);
+        float tailWave = sin(uTime * (1.3 + uPrance * 2.8) + uv.y * 5.6);
+        pos.z += tailWave * (0.018 + uPrance * 0.032) * tailZone * relief;
+        pos.y += sin(uTime * 3.6 - uv.x * 6.0) * 0.038 * uPrance * tailZone;
 
-        vec3 rotateNormalXY(vec3 n, float rotY, float rotX) {
-            float cy = cos(rotY);
-            float sy = sin(rotY);
-            vec3 ny = vec3(n.x * cy + n.z * sy, n.y, -n.x * sy + n.z * cy);
+        // 2. 'Prance' Mode: Articulated Arabian Passage foreleg reach, hind-step & arched neck nod
+        if (uPrance > 0.005) {
+            float gaitPhase = uTime * 3.8;
+            float liftedForeleg = smoothstep(0.69, 0.77, uv.x) * smoothstep(0.50, 0.34, uv.y);
+            float kneeReach = sin(gaitPhase);
+            pos.y += (0.045 + 0.055 * kneeReach) * liftedForeleg * uPrance;
+            pos.x += (0.025 + 0.035 * cos(gaitPhase)) * liftedForeleg * uPrance;
 
-            float cx = cos(rotX);
-            float sx = sin(rotX);
-            return normalize(vec3(ny.x, ny.y * cx - ny.z * sx, ny.y * sx + ny.z * cx));
+            float liftedHind = smoothstep(0.24, 0.32, uv.x) * smoothstep(0.50, 0.40, uv.x) * smoothstep(0.45, 0.28, uv.y);
+            pos.y += (0.035 - 0.040 * kneeReach) * liftedHind * uPrance;
+
+            float headNeck = smoothstep(0.56, 0.74, uv.x) * smoothstep(0.54, 0.76, uv.y);
+            pos.y += sin(gaitPhase + 0.8) * 0.032 * headNeck * uPrance;
+            pos.x -= cos(gaitPhase + 0.8) * 0.018 * headNeck * uPrance;
         }
 
-        void main() {
-            vec4 nr = texture2D(uReliefMap, vUv);
-            vec3 localNormal = normalize(nr.rgb * 2.0 - 1.0);
-            vec3 N = rotateNormalXY(localNormal, uTilt.x, uTilt.y);
-            float thickness = nr.a;
-
-            // Chromatic RGB optical glass dispersion (subtle in Poise, vivid in 'Prism' mode!)
-            vec2 dispOffset = N.xy * (0.0012 + uDispersion * 0.0068) * smoothstep(0.05, 0.55, thickness);
-            vec4 baseG = texture2D(uColorMap, vUv);
-            if (baseG.a < 0.008) discard;
-
-            float rChan = texture2D(uColorMap, vUv + dispOffset).r;
-            float bChan = texture2D(uColorMap, vUv - dispOffset).b;
-            vec3 baseRgb = mix(baseG.rgb, vec3(rChan, baseG.g, bChan), clamp(0.15 + uDispersion * 0.85, 0.0, 1.0));
-
-            // Cursor-steered precision optical key & counter-rim lights
-            vec3 L1 = normalize(vec3(uMouse.x * 0.85 - 0.22, -uMouse.y * 0.75 + 0.45, 1.0));
-            vec3 L2 = normalize(vec3(-uMouse.x * 0.65 + 0.42, uMouse.y * 0.55 - 0.25, 0.88));
-            vec3 V = vec3(0.0, 0.0, 1.0);
-
-            vec3 H1 = normalize(L1 + V);
-            vec3 H2 = normalize(L2 + V);
-
-            float specSharp = pow(max(dot(N, H1), 0.0), 46.0);
-            float specSoft  = pow(max(dot(N, H2), 0.0), 16.0);
-            float fresnel   = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 2.0);
-
-            // Detect pink laser-cut optical glass seams
-            float maxC = max(baseG.r, max(baseG.g, baseG.b));
-            float minC = min(baseG.r, min(baseG.g, baseG.b));
-            float seamChroma = smoothstep(0.05, 0.22, maxC - minC);
-
-            float phase = dot(N.xy, vec2(3.8, 2.9)) + vUv.x * 4.6 - vUv.y * 2.8 + uTime * (0.48 + uDispersion * 0.65) + uMouse.x * 1.5;
-            vec3 prismBand = 0.36 * uPrismA * (0.5 + 0.5 * sin(phase))
-                           + 0.32 * uPrismB * (0.5 + 0.5 * sin(phase + 2.094))
-                           + 0.32 * uPrismC * (0.5 + 0.5 * sin(phase + 4.188));
-
-            vec3 col = baseRgb;
-            col = mix(col, col * (0.86 + 0.26 * uTintColor), uTintMix);
-
-            float lum = dot(col, vec3(0.299, 0.587, 0.114));
-            float headroom = 1.0 - smoothstep(0.78, 0.98, lum);
-
-            float causticBoost = 1.0 + uDispersion * 1.65;
-            float causticMask = smoothstep(0.06, 0.62, thickness) * (0.32 + 0.68 * fresnel);
-            col += prismBand * (specSoft * 0.16 + causticMask * 0.085 + seamChroma * 0.075) * causticBoost * (0.35 + 0.65 * headroom);
-            col += vec3(1.0, 0.98, 1.0) * specSharp * (0.16 + seamChroma * 0.20 + uDispersion * 0.10) * smoothstep(0.04, 0.36, thickness);
-
-            // Luminous wave sweeping from hindquarter to muzzle during 'Rear' or mode switch
-            if (uPulse > 0.005) {
-                float progress = 1.0 - uPulse;
-                float distFromHind = length(vUv - vec2(0.24, 0.18));
-                float waveRing = exp(-pow((distFromHind - progress * 1.15) * 8.5, 2.0));
-                col += (prismBand * 0.68 + vec3(0.34)) * waveRing * uPulse * 0.62;
-            }
-
-            gl_FragColor = vec4(clamp(col, 0.0, 1.0), baseG.a);
+        // 3. 'Rear' (Levade) Action: Foreleg tuck & proud arched neck lift at peak of rear
+        if (uRear > 0.005) {
+            float foreTuck = smoothstep(0.68, 0.78, uv.x) * smoothstep(0.52, 0.30, uv.y);
+            pos.y += 0.09 * foreTuck * uRear;
+            pos.x -= 0.03 * foreTuck * uRear;
         }
-    `
-});
+
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+    }
+`;
+
+const FRAGMENT_SHADER = /* glsl */ `
+    uniform sampler2D uColorMap;
+    uniform sampler2D uReliefMap;
+    uniform float uTime;
+    uniform vec2 uMouse;
+    uniform vec2 uTilt;
+    uniform float uDispersion;
+    uniform float uPulse;
+    uniform float uShellAlpha;
+    uniform float uBevelFocus;
+    uniform vec3 uPrismA;
+    uniform vec3 uPrismB;
+    uniform vec3 uPrismC;
+    uniform vec3 uTintColor;
+    uniform float uTintMix;
+
+    varying vec2 vUv;
+
+    vec3 rotateNormalXY(vec3 n, float rotY, float rotX) {
+        float cy = cos(rotY);
+        float sy = sin(rotY);
+        vec3 ny = vec3(n.x * cy + n.z * sy, n.y, -n.x * sy + n.z * cy);
+
+        float cx = cos(rotX);
+        float sx = sin(rotX);
+        return normalize(vec3(ny.x, ny.y * cx - ny.z * sx, ny.y * sx + ny.z * cx));
+    }
+
+    void main() {
+        vec4 nr = texture2D(uReliefMap, vUv);
+        vec3 localNormal = normalize(nr.rgb * 2.0 - 1.0);
+        vec3 N = rotateNormalXY(localNormal, uTilt.x, uTilt.y);
+        float thickness = nr.a;
+
+        // Subtle internal parallax refraction shift as the sculpture turns in 3D
+        vec2 turnRefract = vec2(sin(uTilt.x), -sin(uTilt.y)) * (0.0045 * (1.0 - thickness));
+        vec2 sampleUv = clamp(vUv + turnRefract * uBevelFocus, 0.0, 1.0);
+
+        vec2 dispOffset = N.xy * (0.0009 + uDispersion * 0.0065) * smoothstep(0.05, 0.55, thickness);
+        vec4 baseG = texture2D(uColorMap, sampleUv);
+        if (baseG.a < 0.008) discard;
+
+        float rChan = texture2D(uColorMap, sampleUv + dispOffset).r;
+        float bChan = texture2D(uColorMap, sampleUv - dispOffset).b;
+        vec3 baseRgb = mix(baseG.rgb, vec3(rChan, baseG.g, bChan), clamp(0.10 + uDispersion * 0.88, 0.0, 1.0));
+
+        // Precision gallery key & rim lights that sweep across glass bevels as the horse turns
+        vec3 L1 = normalize(vec3(uMouse.x * 0.85 - 0.25 + sin(uTilt.x) * 0.55, -uMouse.y * 0.70 + 0.48, 1.0));
+        vec3 L2 = normalize(vec3(-uMouse.x * 0.65 + 0.45 - sin(uTilt.x) * 0.45, uMouse.y * 0.50 - 0.22, 0.88));
+        vec3 V = vec3(0.0, 0.0, 1.0);
+
+        vec3 H1 = normalize(L1 + V);
+        vec3 H2 = normalize(L2 + V);
+
+        float specSharp = pow(max(dot(N, H1), 0.0), 48.0);
+        float specSoft  = pow(max(dot(N, H2), 0.0), 16.0);
+        float fresnel   = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 1.85);
+
+        // Detect carved glass bevels & pale rose-pearl seams
+        float maxC = max(baseG.r, max(baseG.g, baseG.b));
+        float minC = min(baseG.r, min(baseG.g, baseG.b));
+        float seamChroma = smoothstep(0.03, 0.16, maxC - minC);
+        float rimWall = clamp(fresnel * 1.15 + seamChroma * 0.85 + (1.0 - smoothstep(0.05, 0.42, thickness)) * 0.75, 0.0, 1.0);
+
+        float phase = dot(N.xy, vec2(3.6, 2.8)) + sampleUv.x * 4.4 - sampleUv.y * 2.6 + uTime * (0.42 + uDispersion * 0.65) + uTilt.x * 2.6;
+        vec3 prismBand = 0.36 * uPrismA * (0.5 + 0.5 * sin(phase))
+                       + 0.34 * uPrismB * (0.5 + 0.5 * sin(phase + 2.094))
+                       + 0.30 * uPrismC * (0.5 + 0.5 * sin(phase + 4.188));
+
+        vec3 col = baseRgb;
+        col = mix(col, col * (0.90 + 0.18 * uTintColor), uTintMix);
+
+        // Lift outer volumetric glass walls toward crisp, luminous Pearl White crystal
+        col = mix(col, vec3(0.992, 0.990, 0.995), uBevelFocus * 0.42);
+
+        float lum = dot(col, vec3(0.299, 0.587, 0.114));
+        float headroom = 1.0 - smoothstep(0.80, 0.99, lum);
+
+        float causticBoost = 0.72 + uDispersion * 1.85;
+        float causticMask = smoothstep(0.06, 0.62, thickness) * (0.28 + 0.72 * fresnel);
+        col += prismBand * (specSoft * 0.14 + causticMask * 0.075 + seamChroma * 0.065) * causticBoost * (0.32 + 0.68 * headroom);
+        col += vec3(1.0, 0.998, 1.0) * specSharp * (0.20 + seamChroma * 0.22 + uBevelFocus * 0.16) * smoothstep(0.03, 0.34, thickness);
+
+        // Luminous pearl refraction wave sweeping from hindquarter to muzzle during 'Rear' or mode switch
+        if (uPulse > 0.005) {
+            float progress = 1.0 - uPulse;
+            float distFromHind = length(sampleUv - vec2(0.24, 0.18));
+            float waveRing = exp(-pow((distFromHind - progress * 1.15) * 8.5, 2.0));
+            col += (prismBand * 0.55 + vec3(0.42)) * waveRing * uPulse * 0.58;
+        }
+
+        // Outer volumetric glass shells accentuate physical crystal slab edges as the sculpture rotates
+        float alphaWeight = mix(1.0, rimWall, uBevelFocus);
+        float outAlpha = baseG.a * uShellAlpha * alphaWeight;
+
+        gl_FragColor = vec4(clamp(col, 0.0, 1.0), outAlpha);
+    }
+`;
 
 // Aspect ratio of abstract optical-glass Arabian = 890 / 837 = 1.0633
 const arabianPlaneGeo = new THREE.PlaneGeometry(3.56, 3.35, 160, 160);
-const arabianMesh = new THREE.Mesh(arabianPlaneGeo, glassArabianMaterial);
-// Offset inside rearPivot so world position at rest is (0, 0, 0)
-arabianMesh.position.set(-HIND_HOOF_X, -HIND_HOOF_Y, 0);
-rearPivot.add(arabianMesh);
+
+// 5-Layer Volumetric Optical-Glass Slab Stack (back crystal wall -> nacre core -> front specular face)
+// Gives physical ~30cm glass slab depth when the Arabian turns in 3D!
+const GLASS_SHELL_SPECS = [
+    { layerZ: -0.15, shellAlpha: 0.44, bevelFocus: 0.72, order: 2 },
+    { layerZ: -0.075, shellAlpha: 0.36, bevelFocus: 0.48, order: 3 },
+    { layerZ:  0.00, shellAlpha: 0.97, bevelFocus: 0.00, order: 4 },
+    { layerZ:  0.075, shellAlpha: 0.34, bevelFocus: 0.52, order: 5 },
+    { layerZ:  0.15, shellAlpha: 0.46, bevelFocus: 0.76, order: 6 }
+];
+
+const shellMaterials = [];
+
+GLASS_SHELL_SPECS.forEach((spec) => {
+    const uniforms = {
+        uColorMap: { value: colorTex },
+        uReliefMap: { value: reliefTex },
+        uTime: { value: 0.0 },
+        uReliefDepth: { value: 0.46 },
+        uLayerZ: { value: spec.layerZ },
+        uShellAlpha: { value: spec.shellAlpha },
+        uBevelFocus: { value: spec.bevelFocus },
+        uMouse: { value: new THREE.Vector2(0.0, 0.0) },
+        uTilt: { value: new THREE.Vector2(0.0, 0.0) },
+        uPrance: { value: 0.0 },
+        uRear: { value: 0.0 },
+        uDispersion: { value: 0.0 },
+        uPulse: { value: 0.0 },
+        uPrismA: { value: new THREE.Color(MODES.poise.prismA) },
+        uPrismB: { value: new THREE.Color(MODES.poise.prismB) },
+        uPrismC: { value: new THREE.Color(MODES.poise.prismC) },
+        uTintColor: { value: new THREE.Color(MODES.poise.tintColor) },
+        uTintMix: { value: MODES.poise.tintMix }
+    };
+
+    const mat = new THREE.ShaderMaterial({
+        uniforms,
+        transparent: true,
+        depthWrite: false,
+        vertexShader: VERTEX_SHADER,
+        fragmentShader: FRAGMENT_SHADER
+    });
+
+    const mesh = new THREE.Mesh(arabianPlaneGeo, mat);
+    mesh.position.set(-HIND_HOOF_X, -HIND_HOOF_Y, 0);
+    mesh.renderOrder = spec.order;
+    rearPivot.add(mesh);
+    shellMaterials.push(mat);
+});
 
 // ============================================================================
-// 4. MINIMALIST PRECISION OPTICAL LENS PLINTH
+// 4. MINIMALIST PEARL-WHITE OPTICAL LENS PLINTH
 // ============================================================================
 function createOpticalFloorGlowTexture() {
     const c = document.createElement('canvas');
@@ -335,9 +401,9 @@ function createOpticalFloorGlowTexture() {
     const ctx = c.getContext('2d');
 
     const g = ctx.createRadialGradient(256, 256, 8, 256, 256, 248);
-    g.addColorStop(0.0, 'rgba(255, 255, 255, 0.86)');
-    g.addColorStop(0.40, 'rgba(251, 207, 232, 0.24)');
-    g.addColorStop(0.72, 'rgba(221, 214, 254, 0.14)');
+    g.addColorStop(0.0, 'rgba(255, 255, 255, 0.94)');
+    g.addColorStop(0.42, 'rgba(248, 250, 252, 0.42)');
+    g.addColorStop(0.74, 'rgba(254, 249, 235, 0.22)');
     g.addColorStop(1.0, 'rgba(255, 255, 255, 0.0)');
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, 512, 512);
@@ -346,14 +412,14 @@ function createOpticalFloorGlowTexture() {
 }
 
 const plinthGroup = new THREE.Group();
-plinthGroup.position.set(-0.02, -1.50, -0.15);
+plinthGroup.position.set(-0.02, -1.50, -0.12);
 
 const floorDisc = new THREE.Mesh(
     new THREE.CircleGeometry(1.68, 84),
     new THREE.MeshBasicMaterial({
         map: createOpticalFloorGlowTexture(),
         transparent: true,
-        opacity: 0.85,
+        opacity: 0.90,
         depthWrite: false
     })
 );
@@ -363,7 +429,7 @@ plinthGroup.add(floorDisc);
 const primaryArcMat = new THREE.MeshBasicMaterial({
     color: new THREE.Color(MODES.poise.arcPrimary),
     transparent: true,
-    opacity: 0.36,
+    opacity: 0.42,
     side: THREE.DoubleSide,
     depthWrite: false
 });
@@ -378,7 +444,7 @@ plinthGroup.add(primaryOpticArc);
 const secondaryArcMat = new THREE.MeshBasicMaterial({
     color: new THREE.Color(MODES.poise.arcSecondary),
     transparent: true,
-    opacity: 0.30,
+    opacity: 0.34,
     side: THREE.DoubleSide,
     depthWrite: false
 });
@@ -391,7 +457,7 @@ secondaryOpticArc.position.y = 0.003;
 plinthGroup.add(secondaryOpticArc);
 
 const pulseRingMat = new THREE.MeshBasicMaterial({
-    color: new THREE.Color('#ec4899'),
+    color: new THREE.Color('#c97a9b'),
     transparent: true,
     opacity: 0.0,
     side: THREE.DoubleSide,
@@ -411,10 +477,9 @@ scene.add(stageGroup);
 coronaMesh.renderOrder = 0;
 plinthGroup.renderOrder = 1;
 slipstreamGroup.renderOrder = 1;
-arabianMesh.renderOrder = 2;
 
 // ============================================================================
-// 5. LIVE EQUINE GAIT & OPTICAL INTERPOLATION STATE
+// 5. LIVE EQUINE GAIT, DEEP 3D TURN & INTERACTIVE TURNTABLE STATE
 // ============================================================================
 let activeMode = MODES.poise;
 let targetPrismA = new THREE.Color(MODES.poise.prismA);
@@ -432,7 +497,6 @@ let currentCoronaOpacity = 0.0;
 let currentArcSpeed = 1.0;
 let arcAngleAccum = 0.0;
 
-// Classical Arabian Levade ('Rear') animation timeline (0 -> 1)
 let rearPhase = 0.0;
 let isRearing = false;
 let refractPulse = 0.0;
@@ -440,25 +504,25 @@ let refractPulse = 0.0;
 // ============================================================================
 // 6. RESPONSIVE STAGE POSITIONING
 // ============================================================================
-let stageBaseX = -1.78;
+let stageBaseX = -1.76;
 let stageBaseY = 0.24;
 
 function updateResponsiveLayout() {
     const w = window.innerWidth;
     if (w < 900) {
         stageGroup.scale.setScalar(0.82);
-        camera.position.set(0, 0.12, 8.2);
+        camera.position.set(0, 0.12, 7.6);
         stageBaseX = 0.0;
-        stageBaseY = 1.48;
+        stageBaseY = 1.44;
     } else if (w < 1200) {
         stageGroup.scale.setScalar(0.98);
-        camera.position.set(0, 0.10, 7.1);
-        stageBaseX = -1.62;
+        camera.position.set(0, 0.10, 6.6);
+        stageBaseX = -1.60;
         stageBaseY = 0.22;
     } else {
         stageGroup.scale.setScalar(1.08);
-        camera.position.set(0, 0.10, 6.6);
-        stageBaseX = -1.78;
+        camera.position.set(0, 0.10, 6.1);
+        stageBaseX = -1.76;
         stageBaseY = 0.24;
     }
     stageGroup.position.set(stageBaseX, stageBaseY, 0);
@@ -466,12 +530,20 @@ function updateResponsiveLayout() {
 updateResponsiveLayout();
 
 // ============================================================================
-// 7. INTERACTIVE CONTROLS: POISE / PRANCE / PRISM + CLASSICAL REAR
+// 7. INTERACTIVE CONTROLS: CURSOR 3D TURN, DRAG-TO-ROTATE & LEVADE REAR
 // ============================================================================
 let mouseNormX = 0;
 let mouseNormY = 0;
 let smoothMouseX = 0;
 let smoothMouseY = 0;
+
+// Interactive drag-to-turn state for inspecting deep 3D glass layers
+let isPointerDown = false;
+let pointerDragged = false;
+let downClientX = 0;
+let downClientY = 0;
+let prevDragX = 0;
+let dragYawOffset = 0;
 
 function triggerArabianRear() {
     isRearing = true;
@@ -482,10 +554,33 @@ function triggerArabianRear() {
 window.addEventListener('pointermove', (e) => {
     mouseNormX = (e.clientX / window.innerWidth) * 2 - 1;
     mouseNormY = (e.clientY / window.innerHeight) * 2 - 1;
+
+    if (isPointerDown) {
+        const dist = Math.hypot(e.clientX - downClientX, e.clientY - downClientY);
+        if (dist > 6) {
+            pointerDragged = true;
+        }
+        const dx = e.clientX - prevDragX;
+        prevDragX = e.clientX;
+        dragYawOffset = Math.max(-0.55, Math.min(0.55, dragYawOffset + dx * 0.0045));
+    }
 });
 
 if (container) {
-    container.addEventListener('click', triggerArabianRear);
+    container.addEventListener('pointerdown', (e) => {
+        isPointerDown = true;
+        pointerDragged = false;
+        downClientX = e.clientX;
+        downClientY = e.clientY;
+        prevDragX = e.clientX;
+    });
+
+    window.addEventListener('pointerup', () => {
+        if (isPointerDown && !pointerDragged) {
+            triggerArabianRear();
+        }
+        isPointerDown = false;
+    });
 }
 
 const prismPulseBtn = document.getElementById('prism-pulse-btn');
@@ -540,6 +635,11 @@ function animate() {
     smoothMouseX += (mouseNormX - smoothMouseX) * 0.065;
     smoothMouseY += (mouseNormY - smoothMouseY) * 0.065;
 
+    // Gently relax manual drag offset when released so the sculpture settles gracefully
+    if (!isPointerDown) {
+        dragYawOffset *= 0.965;
+    }
+
     // Smoothly interpolate horse mode parameters
     currentPrance += (activeMode.pranceStrength - currentPrance) * 0.07;
     currentDispersion += (activeMode.prismDispersion - currentDispersion) * 0.07;
@@ -547,23 +647,21 @@ function animate() {
     currentCoronaOpacity += (activeMode.coronaOpacity - currentCoronaOpacity) * 0.07;
     currentArcSpeed += (activeMode.arcSpeed - currentArcSpeed) * 0.06;
 
-    // Advance classical Arabian 'Rear' (Levade) envelope: smooth rise, poised suspension, silky landing
+    // Classical Arabian 'Rear' (Levade) envelope
     let rearEnvelope = 0.0;
     if (isRearing) {
-        rearPhase += dt * 0.72; // ~1.4s graceful levade arc
+        rearPhase += dt * 0.72;
         if (rearPhase >= 1.0) {
             rearPhase = 0.0;
             isRearing = false;
         } else {
-            // Smooth bell curve with poised suspension at the apex
             rearEnvelope = Math.pow(Math.sin(rearPhase * Math.PI), 1.35);
         }
     }
 
-    // Apply Levade rotation around the planted hind hoof (+16.5° upward forehand lift)
     rearPivot.rotation.z = rearEnvelope * 0.288;
 
-    // Combine calm Poise float + rhythmic Arabian Passage bounce ('Prance')
+    // Calm Poise float + rhythmic Arabian Passage bounce ('Prance')
     const poiseFloat = Math.sin(t * 0.75) * 0.034 * (1.0 - currentPrance * 0.6);
     const pranceBounce = Math.abs(Math.sin(t * 3.8)) * 0.095 * currentPrance;
     const pranceRock = Math.sin(t * 3.8) * 0.028 * currentPrance;
@@ -571,12 +669,21 @@ function animate() {
     horsePivot.position.y = poiseFloat + pranceBounce;
     horsePivot.rotation.z = pranceRock;
 
-    // Precision 3D relief parallax tilt
-    const targetRotY = smoothMouseX * 0.14 + Math.sin(t * 0.38) * 0.036;
-    const targetRotX = smoothMouseY * 0.07;
+    // Deep 3D Gallery Turn:
+    // - Continuous organic showcase turn (±13.5°) even when hands-free
+    // - Responsive cursor turn (±25°) + interactive drag-to-turn (clamped cleanly to ±39°)
+    const autoYaw = Math.sin(t * 0.46) * 0.235;
+    const autoPitch = Math.cos(t * 0.34) * 0.042;
+    const rawTargetY = smoothMouseX * 0.43 + autoYaw + dragYawOffset;
+    const targetRotY = Math.max(-0.68, Math.min(0.68, rawTargetY));
+    const targetRotX = Math.max(-0.24, Math.min(0.24, smoothMouseY * 0.15 + autoPitch));
 
-    horsePivot.rotation.y += (targetRotY - horsePivot.rotation.y) * 0.075;
-    horsePivot.rotation.x += (targetRotX - horsePivot.rotation.x) * 0.075;
+    horsePivot.rotation.y += (targetRotY - horsePivot.rotation.y) * 0.08;
+    horsePivot.rotation.x += (targetRotX - horsePivot.rotation.x) * 0.08;
+
+    // Cohesive 3D plinth perspective turn beneath the sculpture
+    plinthGroup.rotation.y = horsePivot.rotation.y * 0.65;
+    plinthGroup.rotation.x = horsePivot.rotation.x * 0.32;
 
     // Animate aerodynamic slipstream trails in 'Prance' mode
     if (currentSlipstreamOpacity > 0.005) {
@@ -599,23 +706,27 @@ function animate() {
         });
     }
 
-    // Animate Rainbow-Pearl Corona Halo behind sculpture ('Prism' mode + 'Rear' burst)
-    coronaMat.opacity = Math.min(1.0, currentCoronaOpacity + rearEnvelope * 0.55);
+    // Animate Corona Halo behind sculpture ('Prism' mode + 'Rear' burst)
+    coronaMat.opacity = Math.min(1.0, currentCoronaOpacity + rearEnvelope * 0.45);
     coronaMesh.scale.setScalar(1.0 + Math.sin(t * 1.4) * 0.03 + rearEnvelope * 0.08);
 
-    // Update live GLSL optical-glass uniforms
-    glassArabianUniforms.uTime.value = t;
-    glassArabianUniforms.uMouse.value.set(smoothMouseX, smoothMouseY);
-    glassArabianUniforms.uTilt.value.set(horsePivot.rotation.y, horsePivot.rotation.x);
-    glassArabianUniforms.uPrance.value = currentPrance;
-    glassArabianUniforms.uRear.value = rearEnvelope;
-    glassArabianUniforms.uDispersion.value = Math.min(1.2, currentDispersion + rearEnvelope * 0.45);
-    glassArabianUniforms.uPulse.value = refractPulse;
-    glassArabianUniforms.uPrismA.value.lerp(targetPrismA, 0.06);
-    glassArabianUniforms.uPrismB.value.lerp(targetPrismB, 0.06);
-    glassArabianUniforms.uPrismC.value.lerp(targetPrismC, 0.06);
-    glassArabianUniforms.uTintColor.value.lerp(targetTintColor, 0.06);
-    glassArabianUniforms.uTintMix.value += (targetTintMix - glassArabianUniforms.uTintMix.value) * 0.06;
+    // Update live GLSL optical-glass uniforms across all 5 volumetric glass shells
+    const liveDispersion = Math.min(1.2, currentDispersion + rearEnvelope * 0.42);
+    for (let i = 0; i < shellMaterials.length; i++) {
+        const u = shellMaterials[i].uniforms;
+        u.uTime.value = t;
+        u.uMouse.value.set(smoothMouseX, smoothMouseY);
+        u.uTilt.value.set(horsePivot.rotation.y, horsePivot.rotation.x);
+        u.uPrance.value = currentPrance;
+        u.uRear.value = rearEnvelope;
+        u.uDispersion.value = liveDispersion;
+        u.uPulse.value = refractPulse;
+        u.uPrismA.value.lerp(targetPrismA, 0.06);
+        u.uPrismB.value.lerp(targetPrismB, 0.06);
+        u.uPrismC.value.lerp(targetPrismC, 0.06);
+        u.uTintColor.value.lerp(targetTintColor, 0.06);
+        u.uTintMix.value += (targetTintMix - u.uTintMix.value) * 0.06;
+    }
 
     primaryArcMat.color.lerp(targetArcPrimary, 0.06);
     secondaryArcMat.color.lerp(targetArcSecondary, 0.06);
@@ -627,7 +738,7 @@ function animate() {
     if (refractPulse > 0.005) {
         const progress = 1 - refractPulse;
         pulseRingMesh.scale.setScalar(0.85 + progress * 0.88);
-        pulseRingMat.opacity = refractPulse * 0.58;
+        pulseRingMat.opacity = refractPulse * 0.48;
     } else {
         pulseRingMat.opacity = 0;
     }
