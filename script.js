@@ -762,8 +762,11 @@ const drawerTargets = document.querySelectorAll('[data-drawer-target]');
 
 function setDrawerOpen(open) {
     if (!sideDrawer || !hamburgerBtn || !drawerBackdrop) return;
+    if (!open && sideDrawer.contains(document.activeElement)) {
+        hamburgerBtn.focus({ preventScroll: true });
+    }
     sideDrawer.classList.toggle('is-open', open);
-    sideDrawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    sideDrawer.inert = !open;
     hamburgerBtn.classList.toggle('is-open', open);
     hamburgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
     drawerBackdrop.hidden = !open;
