@@ -1,14 +1,13 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // ============================================================================
-// 1. THREE.JS SCENE, CAMERA & HIGH-PRECISION PHYSICAL GLASS RENDERER
+// 1. THREE.JS SCENE, CAMERA & TRANSPARENT LIQUID-GLASS STAGE
 // ============================================================================
 const container = document.getElementById('canvas-container');
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
-    42,
+    40,
     window.innerWidth / window.innerHeight,
     0.1,
     100
@@ -16,198 +15,184 @@ const camera = new THREE.PerspectiveCamera(
 
 const renderer = new THREE.WebGLRenderer({
     antialias: true,
-    alpha: false,
+    alpha: true,
     powerPreference: 'high-performance'
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.06;
+renderer.setClearColor(0x000000, 0);
 
 if (container) {
     container.appendChild(renderer.domElement);
 }
 
 // ============================================================================
-// 2. SEAMLESS PEARL-BLUSH STUDIO BACKGROUND (FOR TRUE GLASS REFRACTION)
-// ============================================================================
-// Three.js physical transmission (`transmission: 1.0`) refracts `scene.background`
-// and opaque scene geometry. Having a rich, soft couture studio canvas in
-// `scene.background` ensures real lens magnification & refraction inside the horse.
-function createCoutureStudioBackground() {
-    const c = document.createElement('canvas');
-    c.width = 1024;
-    c.height = 1024;
-    const ctx = c.getContext('2d');
-
-    // Base soft pearl-blush couture gradient matching style.css
-    const baseGrad = ctx.createRadialGradient(310, 380, 40, 512, 512, 760);
-    baseGrad.addColorStop(0.0, '#fffcfe');
-    baseGrad.addColorStop(0.45, '#fdf4f9');
-    baseGrad.addColorStop(1.0, '#f7e6f0');
-    ctx.fillStyle = baseGrad;
-    ctx.fillRect(0, 0, 1024, 1024);
-
-    // Subtle luminous pastel aura behind the left-side sculpture stage
-    // Gives the curved clear crystal body delicate rose/sky/lilac caustics to bend
-    const stageWash = ctx.createRadialGradient(320, 490, 20, 320, 490, 340);
-    stageWash.addColorStop(0.0, 'rgba(232, 185, 215, 0.34)');
-    stageWash.addColorStop(0.38, 'rgba(196, 181, 253, 0.20)');
-    stageWash.addColorStop(0.68, 'rgba(186, 230, 253, 0.14)');
-    stageWash.addColorStop(1.0, 'rgba(253, 244, 249, 0.0)');
-    ctx.fillStyle = stageWash;
-    ctx.fillRect(0, 0, 1024, 1024);
-
-    // Upper-right whisper of lilac-rose mist
-    const cornerWash = ctx.createRadialGradient(840, 240, 30, 840, 240, 380);
-    cornerWash.addColorStop(0.0, 'rgba(244, 198, 226, 0.24)');
-    cornerWash.addColorStop(1.0, 'rgba(253, 244, 249, 0.0)');
-    ctx.fillStyle = cornerWash;
-    ctx.fillRect(0, 0, 1024, 1024);
-
-    const tex = new THREE.CanvasTexture(c);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    return tex;
-}
-
-scene.background = createCoutureStudioBackground();
-
-// ============================================================================
-// 3. BACCARAT / SWAROVSKI BRIGHT-FIELD & DARK-LINE CRYSTAL STUDIO PMREM
-// ============================================================================
-// Real clear blown crystal gets its signature liquid transparency, bright white
-// hip/rib contour loops, and dark-line glass edges from high-contrast studio
-// softboxes paired with deep negative-fill studio cards.
-function buildCrystalStudioEnvironment(glRenderer) {
-    const envScene = new THREE.Scene();
-    // Deep plum-graphite negative-fill dome -> gives clear crystal crisp dark-line edges!
-    envScene.background = new THREE.Color('#221728');
-
-    const addPanel = (w, h, color, pos, lookAtPos) => {
-        const mesh = new THREE.Mesh(
-            new THREE.PlaneGeometry(w, h),
-            new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide })
-        );
-        mesh.position.set(...pos);
-        mesh.lookAt(...lookAtPos);
-        envScene.add(mesh);
-    };
-
-    // Overhead main bright white softbox (creates crisp top crest, back & croup highlights)
-    addPanel(14, 8, new THREE.Color(11.0, 11.0, 11.4), [0, 9.5, 1.5], [0, 0, 0]);
-
-    // Front-left key studio softbox (creates signature oval specular loops on hip, ribs & shoulder)
-    addPanel(6.5, 11, new THREE.Color(10.5, 10.2, 10.6), [-8.5, 3.2, 7.5], [0, 0, 0]);
-
-    // Front-right narrow catchlight strip (illuminates arched neck, dished head & teacup muzzle)
-    addPanel(4.2, 10, new THREE.Color(9.5, 9.4, 9.8), [8.5, 2.8, 6.8], [0, 0, 0]);
-
-    // Back-rim crystal halo softboxes (lights up blown-glass tail, ears & legs from behind)
-    addPanel(11, 6, new THREE.Color(8.0, 7.6, 8.4), [-4.0, 4.0, -9.5], [0, 0, 0]);
-    addPanel(9, 6, new THREE.Color(7.2, 7.4, 8.2), [5.0, 2.5, -9.5], [0, 0, 0]);
-
-    // Luminous white studio tabletop bounce beneath hooves
-    addPanel(18, 18, new THREE.Color(3.4, 3.2, 3.5), [0, -8.5, 0], [0, 0, 0]);
-
-    // Delicate couture pastel prism accent strips (subtle rose-quartz, sky & lilac fire)
-    addPanel(3.2, 9, new THREE.Color(4.6, 1.7, 3.1), [-9.5, -1.0, 1.5], [0, 0, 0]);
-    addPanel(3.2, 9, new THREE.Color(1.7, 3.3, 4.8), [9.5, 0.5, 1.0], [0, 0, 0]);
-    addPanel(8.0, 2.5, new THREE.Color(3.2, 1.9, 4.6), [0, -3.5, 9.5], [0, 0, 0]);
-
-    const pmrem = new THREE.PMREMGenerator(glRenderer);
-    const envTex = pmrem.fromScene(envScene, 0.028).texture;
-    pmrem.dispose();
-    return envTex;
-}
-
-scene.environment = buildCrystalStudioEnvironment(renderer);
-
-// ============================================================================
-// 4. SHOW-RING LIGHTING PALETTES (WATER-CLEAR / BLUSH QUARTZ / OPAL PRISM)
+// 2. RING-LIGHT GLASSMORPHISM PRISM PALETTES (ROSETTE / ROSE / PEARL)
 // ============================================================================
 const SPECTRUMS = {
     rainbow: {
         rosette: ['#ec4899', '#fb7185', '#f59e0b', '#10b981', '#38bdf8', '#a855f7'],
-        attenuation: '#fdf4f9', // 98% water-clear Baccarat crystal with whisper blush
-        dispersion: 2.2,
-        lightA: '#f472b6',
-        lightB: '#38bdf8',
-        lightC: '#a855f7',
-        ringAccent: '#f3a6ce'
+        prismA: '#f472b6',
+        prismB: '#38bdf8',
+        prismC: '#c084fc',
+        tintMix: 0.0,
+        tintColor: '#ffffff',
+        ringAccent: '#ec4899'
     },
     rose: {
         rosette: ['#be185d', '#ec4899', '#f472b6', '#fda4af', '#f59e0b', '#d946ef'],
-        attenuation: '#fce7f3', // Delicate clear blush rose-quartz crystal
-        dispersion: 1.8,
-        lightA: '#ec4899',
-        lightB: '#fda4af',
-        lightC: '#f59e0b',
-        ringAccent: '#f472b6'
+        prismA: '#ec4899',
+        prismB: '#fda4af',
+        prismC: '#fbbf24',
+        tintMix: 0.14,
+        tintColor: '#fbcfe8',
+        ringAccent: '#db2777'
     },
     opal: {
         rosette: ['#f472b6', '#2dd4bf', '#38bdf8', '#818cf8', '#c084fc', '#fb7185'],
-        attenuation: '#f3e8ff', // Clear icy diamond-opal crystal
-        dispersion: 2.8,
-        lightA: '#38bdf8',
-        lightB: '#c084fc',
-        lightC: '#2dd4bf',
-        ringAccent: '#c4b5fd'
+        prismA: '#38bdf8',
+        prismB: '#c084fc',
+        prismC: '#5eead4',
+        tintMix: 0.14,
+        tintColor: '#e0e7ff',
+        ringAccent: '#8b5cf6'
     }
 };
 
 // ============================================================================
-// 5. WATER-CLEAR BLOWN-CRYSTAL ARABIAN SCULPTURE (3D ANATOMICAL GLB)
+// 3. 3D RELIEF GLASSMORPHED SHOW ARABIAN SCULPTURE + LIVE PRISM SHADER
 // ============================================================================
-const crystalMaterial = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color('#ffffff'),
-    attenuationColor: new THREE.Color(SPECTRUMS.rainbow.attenuation),
-    attenuationDistance: 3.8,
-    metalness: 0.0,
-    roughness: 0.016,
-    transmission: 1.0,
-    ior: 1.545,
-    thickness: 0.88,
-    dispersion: SPECTRUMS.rainbow.dispersion,
-    iridescence: 0.32,
-    iridescenceIOR: 1.34,
-    iridescenceThicknessRange: [150, 520],
-    specularIntensity: 1.0,
-    specularColor: new THREE.Color('#ffffff'),
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.015,
-    envMapIntensity: 1.42
-});
-
 const stageGroup = new THREE.Group();
 const horsePivot = new THREE.Group();
-// Slight 3/4 presentation angle so all 4 crystal legs, both 3D ears & curved barrel shine
-const BASE_YAW = -0.19;
-horsePivot.rotation.y = BASE_YAW;
 stageGroup.add(horsePivot);
 
-const gltfLoader = new GLTFLoader();
-gltfLoader.load(
-    'arabian_crystal.glb?v=5',
-    (gltf) => {
-        gltf.scene.traverse((child) => {
-            if (child.isMesh) {
-                child.geometry.computeVertexNormals();
-                child.material = crystalMaterial;
+const textureLoader = new THREE.TextureLoader();
+const colorTex = textureLoader.load('arabian_glassmorph.webp?v=6');
+colorTex.minFilter = THREE.LinearMipmapLinearFilter;
+colorTex.magFilter = THREE.LinearFilter;
+colorTex.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
+
+const reliefTex = textureLoader.load('arabian_glass_relief.webp?v=6');
+reliefTex.minFilter = THREE.LinearFilter;
+reliefTex.magFilter = THREE.LinearFilter;
+
+const glassArabianUniforms = {
+    uColorMap: { value: colorTex },
+    uReliefMap: { value: reliefTex },
+    uTime: { value: 0.0 },
+    uReliefDepth: { value: 0.24 },
+    uMouse: { value: new THREE.Vector2(0.0, 0.0) },
+    uPulse: { value: 0.0 },
+    uPrismA: { value: new THREE.Color(SPECTRUMS.rainbow.prismA) },
+    uPrismB: { value: new THREE.Color(SPECTRUMS.rainbow.prismB) },
+    uPrismC: { value: new THREE.Color(SPECTRUMS.rainbow.prismC) },
+    uTintColor: { value: new THREE.Color(SPECTRUMS.rainbow.tintColor) },
+    uTintMix: { value: SPECTRUMS.rainbow.tintMix }
+};
+
+const glassArabianMaterial = new THREE.ShaderMaterial({
+    uniforms: glassArabianUniforms,
+    transparent: true,
+    depthWrite: false,
+    vertexShader: /* glsl */ `
+        uniform sampler2D uReliefMap;
+        uniform float uReliefDepth;
+        uniform float uTime;
+
+        varying vec2 vUv;
+        varying vec3 vWorldPos;
+
+        void main() {
+            vUv = uv;
+            float relief = texture2D(uReliefMap, uv).a;
+
+            vec3 pos = position;
+            // Smooth 3D sculptural glass volume relief (0 at silhouette edge -> zero seam)
+            pos.z += relief * uReliefDepth;
+
+            // Delicate living liquid-crystal shimmer on cascading tail & mane plumes
+            float tailZone = smoothstep(0.32, 0.04, uv.x);
+            pos.z += sin(uTime * 1.6 + uv.y * 7.0) * 0.016 * tailZone * relief;
+            pos.x += cos(uTime * 1.3 + uv.y * 5.5) * 0.008 * tailZone * relief;
+
+            vec4 worldPos = modelMatrix * vec4(pos, 1.0);
+            vWorldPos = worldPos.xyz;
+            gl_Position = projectionMatrix * viewMatrix * worldPos;
+        }
+    `,
+    fragmentShader: /* glsl */ `
+        uniform sampler2D uColorMap;
+        uniform sampler2D uReliefMap;
+        uniform float uTime;
+        uniform vec2 uMouse;
+        uniform float uPulse;
+        uniform vec3 uPrismA;
+        uniform vec3 uPrismB;
+        uniform vec3 uPrismC;
+        uniform vec3 uTintColor;
+        uniform float uTintMix;
+
+        varying vec2 vUv;
+        varying vec3 vWorldPos;
+
+        void main() {
+            vec4 base = texture2D(uColorMap, vUv);
+            if (base.a < 0.008) discard;
+
+            vec4 nr = texture2D(uReliefMap, vUv);
+            vec3 localNormal = normalize(nr.rgb * 2.0 - 1.0);
+            vec3 N = normalize(mat3(modelMatrix) * localNormal);
+            float thickness = nr.a;
+
+            // Cursor-steered studio key light + counter-prism rim light
+            vec3 L1 = normalize(vec3(uMouse.x * 0.85 - 0.25, -uMouse.y * 0.75 + 0.48, 1.0));
+            vec3 L2 = normalize(vec3(-uMouse.x * 0.65 + 0.45, uMouse.y * 0.55 - 0.25, 0.85));
+            vec3 V = vec3(0.0, 0.0, 1.0);
+
+            vec3 H1 = normalize(L1 + V);
+            vec3 H2 = normalize(L2 + V);
+
+            float specSharp = pow(max(dot(N, H1), 0.0), 42.0);
+            float specSoft  = pow(max(dot(N, H2), 0.0), 16.0);
+            float fresnel   = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 2.4);
+
+            // Flowing pastel rainbow prism caustic dispersion across glass contours
+            float phase = dot(N.xy, vec2(3.6, 2.8)) + vUv.x * 4.2 - vUv.y * 2.6 + uTime * 0.55 + uMouse.x * 1.4;
+            vec3 prismBand = 0.34 * uPrismA * (0.5 + 0.5 * sin(phase))
+                           + 0.33 * uPrismB * (0.5 + 0.5 * sin(phase + 2.094))
+                           + 0.33 * uPrismC * (0.5 + 0.5 * sin(phase + 4.188));
+
+            vec3 col = base.rgb;
+
+            // Apply optional subtle Ring-Light crystal mode tint (Rose / Pearl)
+            col = mix(col, col * (0.86 + 0.26 * uTintColor), uTintMix);
+
+            // Add interactive cursor-tracked prism caustics & crisp liquid-glass glints
+            float causticMask = smoothstep(0.08, 0.65, thickness) * (0.35 + 0.65 * fresnel);
+            col += prismBand * (specSoft * 0.20 + causticMask * 0.085);
+            col += vec3(1.0, 0.99, 1.0) * specSharp * 0.24 * smoothstep(0.05, 0.4, thickness);
+
+            // Interactive Spotlight shockwave sweeping outward from sculpture heart
+            if (uPulse > 0.005) {
+                float progress = 1.0 - uPulse;
+                float distFromChest = length(vUv - vec2(0.58, 0.48));
+                float waveRing = exp(-pow((distFromChest - progress * 0.88) * 9.5, 2.0));
+                col += (prismBand * 0.55 + vec3(0.45)) * waveRing * uPulse * 0.65;
             }
-        });
-        horsePivot.add(gltf.scene);
-    },
-    undefined,
-    (err) => {
-        console.error('Failed to load arabian_crystal.glb:', err);
-    }
-);
+
+            gl_FragColor = vec4(clamp(col, 0.0, 1.0), base.a);
+        }
+    `
+});
+
+// Aspect ratio of cropped sculpture = 974 / 913 = 1.0668
+const arabianPlaneGeo = new THREE.PlaneGeometry(3.62, 3.39, 160, 160);
+const arabianMesh = new THREE.Mesh(arabianPlaneGeo, glassArabianMaterial);
+horsePivot.add(arabianMesh);
 
 // ============================================================================
-// 6. SUBTLE REFRACTIVE STUDIO BACKDROP DISC & CHAMPIONSHIP SHOW-RING PLINTH
+// 4. DELICATE PEARLESCENT SHOW-RING HALO BENEATH HOOVES
 // ============================================================================
-// Opaque (`transparent: false`) soft-edged cameo disc behind the horse so
-// Three.js's transmission pass bends delicate pastel rings through the glass belly & legs!
 function createShowFloorGlowTexture() {
     const c = document.createElement('canvas');
     c.width = 512;
@@ -215,29 +200,26 @@ function createShowFloorGlowTexture() {
     const ctx = c.getContext('2d');
 
     const g = ctx.createRadialGradient(256, 256, 12, 256, 256, 250);
-    g.addColorStop(0.0, 'rgba(255, 255, 255, 0.85)');
-    g.addColorStop(0.42, 'rgba(251, 207, 232, 0.38)');
+    g.addColorStop(0.0, 'rgba(255, 255, 255, 0.82)');
+    g.addColorStop(0.42, 'rgba(251, 207, 232, 0.36)');
     g.addColorStop(0.75, 'rgba(233, 213, 255, 0.16)');
     g.addColorStop(1.0, 'rgba(255, 255, 255, 0.0)');
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, 512, 512);
 
-    const tex = new THREE.CanvasTexture(c);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    return tex;
+    return new THREE.CanvasTexture(c);
 }
 
-const showRingY = -1.39;
+// Standing hooves rest cleanly at y = -1.515 in sculpture coordinates
 const showRingGroup = new THREE.Group();
-showRingGroup.position.set(0, showRingY, 0);
+showRingGroup.position.set(-0.02, -1.52, -0.15);
 
-// Soft seamless pearlescent spotlight pool beneath crystal hooves
 const floorDisc = new THREE.Mesh(
-    new THREE.CircleGeometry(1.95, 96),
+    new THREE.CircleGeometry(1.92, 84),
     new THREE.MeshBasicMaterial({
         map: createShowFloorGlowTexture(),
         transparent: true,
-        opacity: 0.88,
+        opacity: 0.85,
         depthWrite: false
     })
 );
@@ -245,40 +227,41 @@ floorDisc.rotation.x = -Math.PI / 2;
 showRingGroup.add(floorDisc);
 
 const innerRingMat = new THREE.MeshBasicMaterial({
-    color: new THREE.Color('#f3a6ce')
+    color: new THREE.Color('#ec4899'),
+    transparent: true,
+    opacity: 0.34
 });
 const innerArenaRing = new THREE.Mesh(
-    new THREE.TorusGeometry(1.38, 0.0075, 16, 128),
+    new THREE.TorusGeometry(1.36, 0.0075, 16, 128),
     innerRingMat
 );
 innerArenaRing.rotation.x = Math.PI / 2;
-innerArenaRing.position.y = 0.004;
 showRingGroup.add(innerArenaRing);
 
 const outerArenaRing = new THREE.Mesh(
-    new THREE.TorusGeometry(1.76, 0.006, 16, 140),
+    new THREE.TorusGeometry(1.74, 0.006, 16, 140),
     new THREE.MeshBasicMaterial({
-        color: new THREE.Color('#d8b4fe')
+        color: new THREE.Color('#a855f7'),
+        transparent: true,
+        opacity: 0.22
     })
 );
 outerArenaRing.rotation.x = Math.PI / 2;
-outerArenaRing.position.y = 0.004;
 showRingGroup.add(outerArenaRing);
 
-// Scalloped Championship Rosette Ribbon Ring around the Show Plinth (opaque for crisp refraction)
+// Scalloped Championship Rosette Ribbon Ring around the Show Plinth
 function createScallopedRosetteRing() {
     const segments = 240;
     const pleats = 32;
     const pts = [];
     const colors = [];
-    const pastelRosette = ['#f472b6', '#fda4af', '#fcd34d', '#6ee7b7', '#7dd3fc', '#c4b5fd'];
-    const palette = pastelRosette.map((h) => new THREE.Color(h));
+    const palette = SPECTRUMS.rainbow.rosette.map((h) => new THREE.Color(h));
 
     for (let i = 0; i <= segments; i++) {
         const u = i / segments;
         const theta = u * Math.PI * 2;
-        const r = 1.57 + Math.sin(theta * pleats) * 0.052;
-        pts.push(new THREE.Vector3(Math.cos(theta) * r, 0.006, Math.sin(theta) * r));
+        const r = 1.55 + Math.sin(theta * pleats) * 0.052;
+        pts.push(new THREE.Vector3(Math.cos(theta) * r, 0.005, Math.sin(theta) * r));
 
         const cIdx = (u * palette.length) % palette.length;
         const i0 = Math.floor(cIdx) % palette.length;
@@ -290,7 +273,9 @@ function createScallopedRosetteRing() {
     const geo = new THREE.BufferGeometry().setFromPoints(pts);
     geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
     const mat = new THREE.LineBasicMaterial({
-        vertexColors: true
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.56
     });
     return new THREE.Line(geo, mat);
 }
@@ -317,74 +302,57 @@ showRingGroup.add(pulseRingMesh);
 stageGroup.add(showRingGroup);
 scene.add(stageGroup);
 
+// Ensure crystal horse always renders cleanly above floor rings
+showRingGroup.renderOrder = 1;
+arabianMesh.renderOrder = 2;
+
 // ============================================================================
-// 7. STUDIO KEY & RIM SPOTLIGHTS (CRISP CRYSTAL SPECULAR HIGHLIGHTS)
+// 5. TARGET COLOR INTERPOLATION STATE
 // ============================================================================
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.35);
-scene.add(ambientLight);
-
-const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
-keyLight.position.set(-3.5, 6.8, 5.5);
-scene.add(keyLight);
-
-const rimLight = new THREE.DirectionalLight(0xfff5fa, 1.6);
-rimLight.position.set(3.2, 4.5, -5.0);
-scene.add(rimLight);
-
-const lightRose = new THREE.PointLight(0xf472b6, 1.8, 28);
-lightRose.position.set(-4.8, 3.6, 4.0);
-scene.add(lightRose);
-
-const lightPrism = new THREE.PointLight(0x38bdf8, 1.5, 28);
-lightPrism.position.set(4.2, 3.2, 3.8);
-scene.add(lightPrism);
-
-const lightLilac = new THREE.PointLight(0xa855f7, 1.6, 28);
-lightLilac.position.set(1.2, -3.5, 3.4);
-scene.add(lightLilac);
-
-let targetAttenuationColor = new THREE.Color(SPECTRUMS.rainbow.attenuation);
-let targetDispersion = SPECTRUMS.rainbow.dispersion;
-let targetLightAColor = new THREE.Color(SPECTRUMS.rainbow.lightA);
-let targetLightBColor = new THREE.Color(SPECTRUMS.rainbow.lightB);
-let targetLightCColor = new THREE.Color(SPECTRUMS.rainbow.lightC);
+let targetPrismA = new THREE.Color(SPECTRUMS.rainbow.prismA);
+let targetPrismB = new THREE.Color(SPECTRUMS.rainbow.prismB);
+let targetPrismC = new THREE.Color(SPECTRUMS.rainbow.prismC);
+let targetTintColor = new THREE.Color(SPECTRUMS.rainbow.tintColor);
+let targetTintMix = SPECTRUMS.rainbow.tintMix;
 let targetRingColor = new THREE.Color(SPECTRUMS.rainbow.ringAccent);
 
 // ============================================================================
-// 8. RESPONSIVE STAGE POSITIONING
+// 6. RESPONSIVE STAGE POSITIONING
 // ============================================================================
-let stageBaseX = -2.15;
-let stageBaseY = 0.16;
+let stageBaseX = -2.05;
+let stageBaseY = 0.14;
 
 function updateResponsiveLayout() {
     const w = window.innerWidth;
     if (w < 900) {
-        stageGroup.scale.setScalar(0.86);
-        camera.position.set(0, 0.25, 7.8);
+        stageGroup.scale.setScalar(0.84);
+        camera.position.set(0, 0.12, 8.2);
         stageBaseX = 0.0;
         stageBaseY = 1.48;
     } else if (w < 1200) {
-        stageGroup.scale.setScalar(1.08);
-        camera.position.set(0, 0.18, 6.8);
-        stageBaseX = -1.95;
-        stageBaseY = 0.15;
+        stageGroup.scale.setScalar(1.04);
+        camera.position.set(0, 0.10, 7.1);
+        stageBaseX = -1.88;
+        stageBaseY = 0.12;
     } else {
-        stageGroup.scale.setScalar(1.24);
-        camera.position.set(0, 0.16, 6.35);
-        stageBaseX = -2.18;
-        stageBaseY = 0.16;
+        stageGroup.scale.setScalar(1.18);
+        camera.position.set(0, 0.10, 6.6);
+        stageBaseX = -2.08;
+        stageBaseY = 0.14;
     }
     stageGroup.position.set(stageBaseX, stageBaseY, 0);
 }
 updateResponsiveLayout();
 
 // ============================================================================
-// 9. INTERACTIVE SHOW SPOTLIGHT, CURSOR TURNTABLE & SPARKLES
+// 7. INTERACTIVE SHOW SPOTLIGHT, 3D PARALLAX TILT & SPARKLES
 // ============================================================================
 let mouseNormX = 0;
 let mouseNormY = 0;
+let smoothMouseX = 0;
+let smoothMouseY = 0;
 let spotlightPulse = 0;
-let showPoseTurn = 0;
+let poseLift = 0;
 
 const sparkleCanvas = document.getElementById('sparkle-canvas');
 const sCtx = sparkleCanvas ? sparkleCanvas.getContext('2d') : null;
@@ -419,7 +387,7 @@ function spawnSparkle(x, y, burst = false) {
 
 function triggerShowSpotlight(originX, originY) {
     spotlightPulse = 1.0;
-    showPoseTurn = 0.34;
+    poseLift = 0.09;
     const cx = originX ?? window.innerWidth * 0.32;
     const cy = originY ?? window.innerHeight * 0.48;
     for (let i = 0; i < 24; i++) {
@@ -471,11 +439,11 @@ spectrumBtns.forEach((btn) => {
         spectrumBtns.forEach((b) => b.classList.toggle('active', b === btn));
 
         const spec = SPECTRUMS[key];
-        targetAttenuationColor.set(spec.attenuation);
-        targetDispersion = spec.dispersion;
-        targetLightAColor.set(spec.lightA);
-        targetLightBColor.set(spec.lightB);
-        targetLightCColor.set(spec.lightC);
+        targetPrismA.set(spec.prismA);
+        targetPrismB.set(spec.prismB);
+        targetPrismC.set(spec.prismC);
+        targetTintColor.set(spec.tintColor);
+        targetTintMix = spec.tintMix;
         targetRingColor.set(spec.ringAccent);
 
         const rect = btn.getBoundingClientRect();
@@ -492,7 +460,7 @@ document.querySelectorAll('.spotlight-card').forEach((card) => {
 });
 
 // ============================================================================
-// 10. ANIMATION LOOP
+// 8. ANIMATION LOOP
 // ============================================================================
 const clock = new THREE.Clock();
 
@@ -535,27 +503,33 @@ function animate() {
 
     const t = clock.getElapsedTime();
     spotlightPulse = Math.max(0, spotlightPulse - 0.016);
-    showPoseTurn *= 0.94;
+    poseLift *= 0.93;
 
-    // Smoothly transition crystal clarity, dispersion & spotlight hues
-    crystalMaterial.attenuationColor.lerp(targetAttenuationColor, 0.05);
-    crystalMaterial.dispersion += (targetDispersion - crystalMaterial.dispersion) * 0.05;
-    lightRose.color.lerp(targetLightAColor, 0.05);
-    lightPrism.color.lerp(targetLightBColor, 0.05);
-    lightLilac.color.lerp(targetLightCColor, 0.05);
-    innerRingMat.color.lerp(targetRingColor, 0.05);
+    smoothMouseX += (mouseNormX - smoothMouseX) * 0.07;
+    smoothMouseY += (mouseNormY - smoothMouseY) * 0.07;
 
-    // Gentle floating poise
-    stageGroup.position.y = stageBaseY + Math.sin(t * 0.65) * 0.04;
+    // Update live GLSL glassmorphism shader uniforms
+    glassArabianUniforms.uTime.value = t;
+    glassArabianUniforms.uMouse.value.set(smoothMouseX, smoothMouseY);
+    glassArabianUniforms.uPulse.value = spotlightPulse;
+    glassArabianUniforms.uPrismA.value.lerp(targetPrismA, 0.06);
+    glassArabianUniforms.uPrismB.value.lerp(targetPrismB, 0.06);
+    glassArabianUniforms.uPrismC.value.lerp(targetPrismC, 0.06);
+    glassArabianUniforms.uTintColor.value.lerp(targetTintColor, 0.06);
+    glassArabianUniforms.uTintMix.value += (targetTintMix - glassArabianUniforms.uTintMix.value) * 0.06;
+    innerRingMat.color.lerp(targetRingColor, 0.06);
 
-    // Interactive 3D crystal turntable (reveals full 3D depth, all 4 legs & both ears)
-    const targetRotY = BASE_YAW + mouseNormX * 0.52 + Math.sin(t * 0.30) * 0.15 + showPoseTurn;
-    const targetRotX = mouseNormY * 0.10;
+    // Weightless poised breathing + subtle Spotlight prance lift
+    horsePivot.position.y = Math.sin(t * 0.85) * 0.042 + poseLift;
 
-    horsePivot.rotation.y += (targetRotY - horsePivot.rotation.y) * 0.06;
-    horsePivot.rotation.x += (targetRotX - horsePivot.rotation.x) * 0.06;
+    // Smooth 3D relief parallax tilt (controlled ±8.5° yaw / ±4.5° pitch for realistic glass depth)
+    const targetRotY = smoothMouseX * 0.15 + Math.sin(t * 0.42) * 0.045 + poseLift * 0.5;
+    const targetRotX = smoothMouseY * 0.075;
 
-    // Slowly rotate scalloped Championship Rosette Ring on the show plinth
+    horsePivot.rotation.y += (targetRotY - horsePivot.rotation.y) * 0.08;
+    horsePivot.rotation.x += (targetRotX - horsePivot.rotation.x) * 0.08;
+
+    // Gently rotate scalloped Championship Rosette Ring on the show floor
     rosetteRibbonRing.rotation.y = t * 0.12;
 
     // Animate Championship Spotlight Ripple Ring
@@ -583,7 +557,7 @@ window.addEventListener('resize', () => {
 });
 
 // ============================================================================
-// 11. NAVIGATION, INDIVIDUAL GLASS CARDS & COPY EMAIL LOGIC
+// 9. NAVIGATION, INDIVIDUAL GLASS CARDS & COPY EMAIL LOGIC
 // ============================================================================
 const navHome = document.getElementById('nav-home');
 const navAbout = document.getElementById('nav-about');

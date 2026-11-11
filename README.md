@@ -6,11 +6,13 @@ Official corporate & venture studio web presence for **Pink Pony Tech LLC** — 
 
 ```text
 Pink Pony Tech/
-├── index.html      # Single-viewport couture stage, hero glass card, 01–04 governance cards & JSON-LD
-├── style.css       # Soft Pearl & Blush frosted liquid-glass design system & responsive layout
-├── script.js       # Three.js r160 3D Crystal Pony sculpture, rainbow silk waves & interactive spectrum dock
-├── favicon.svg     # Couture Pony crest vector icon
-└── README.md       # Documentation & GoDaddy DNS guide
+├── index.html                  # Single-viewport couture stage, hero glass card, 01–04 governance cards & JSON-LD
+├── style.css                   # Soft Pearl & Blush frosted liquid-glass design system & responsive layout
+├── script.js                   # Three.js r170 3D relief Glassmorphed Show Arabian, GLSL prism caustics & spectrum dock
+├── arabian_glassmorph.webp     # Couture frosted blush-pearl glassmorphism Show Arabian sculpture (RGBA)
+├── arabian_glass_relief.webp   # 3D surface normal & depth relief map for real-time WebGL refraction & specular glints
+├── favicon.svg                 # Couture Show Arabian crest vector icon
+└── README.md                   # Documentation & GoDaddy DNS guide
 ```
 
 ## Connecting `pinkpony.tech` on GoDaddy to GitHub Pages
