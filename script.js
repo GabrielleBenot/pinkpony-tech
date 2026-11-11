@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 // ============================================================================
-// 1. THREE.JS SCENE, CAMERA, RENDERER & STUDIO CRYSTAL ENVIRONMENT
+// 1. THREE.JS SCENE, CAMERA, RENDERER & STUDIO ENVIRONMENT
 // ============================================================================
 const container = document.getElementById('canvas-container');
 const scene = new THREE.Scene();
@@ -22,7 +22,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.1;
+renderer.toneMappingExposure = 1.04;
 
 if (container) {
     container.appendChild(renderer.domElement);
@@ -35,37 +35,37 @@ roomEnv.dispose();
 pmremGenerator.dispose();
 
 // ============================================================================
-// 2. SHOW-RING LIGHTING PALETTES (ROSETTE RAINBOW / ROSE QUARTZ / PEARL OPAL)
+// 2. SHOW-RING FINISH PALETTES (ROSETTE PINK / COUTURE ROSE / SILK PEARL)
 // ============================================================================
 const SPECTRUMS = {
     rainbow: {
         rosette: ['#ec4899', '#fb7185', '#f59e0b', '#10b981', '#38bdf8', '#a855f7'],
+        coatColor: '#f472b6',
         lightA: '#ec4899',
         lightB: '#38bdf8',
         lightC: '#a855f7',
-        attenuation: '#f472b6',
         ringAccent: '#ec4899'
     },
     rose: {
         rosette: ['#be185d', '#ec4899', '#f472b6', '#fda4af', '#f59e0b', '#d946ef'],
-        lightA: '#ec4899',
+        coatColor: '#ec4899',
+        lightA: '#db2777',
         lightB: '#fda4af',
         lightC: '#f59e0b',
-        attenuation: '#ec4899',
         ringAccent: '#db2777'
     },
     opal: {
         rosette: ['#f472b6', '#2dd4bf', '#38bdf8', '#818cf8', '#c084fc', '#fb7185'],
+        coatColor: '#fbcfe8',
         lightA: '#38bdf8',
         lightB: '#c084fc',
-        lightC: '#2dd4bf',
-        attenuation: '#c084fc',
+        lightC: '#f472b6',
         ringAccent: '#8b5cf6'
     }
 };
 
 // ============================================================================
-// 3. WORLD-CHAMPION HALTER SHOW ARABIAN SILHOUETTE (CRYSTAL SCULPTURE)
+// 3. SOLID COUTURE ROSE-PORCELAIN SHOW ARABIAN SCULPTURE (NON-TRANSPARENT)
 // ============================================================================
 function buildShowArabianShape() {
     const s = new THREE.Shape();
@@ -151,13 +151,15 @@ function buildShowArabianShape() {
 }
 
 const extrudeDepth = 0.34;
+const bevelSize = 0.052;
 const bevelThick = 0.058;
+
 const arabianGeometry = new THREE.ExtrudeGeometry(buildShowArabianShape(), {
     depth: extrudeDepth,
     bevelEnabled: true,
-    bevelSegments: 18,
+    bevelSegments: 20,
     steps: 2,
-    bevelSize: 0.052,
+    bevelSize,
     bevelThickness: bevelThick,
     curveSegments: 36
 });
@@ -170,142 +172,146 @@ const centerOffsetZ = 0.5 * (bbox.min.z + bbox.max.z);
 arabianGeometry.translate(-centerOffsetX, -centerOffsetY, -centerOffsetZ);
 arabianGeometry.computeVertexNormals();
 
-const crystalMaterial = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color('#fff5fa'),
-    attenuationColor: new THREE.Color('#f472b6'),
-    attenuationDistance: 1.5,
-    metalness: 0.03,
-    roughness: 0.04,
-    transmission: 1.0,
-    ior: 1.56,
-    thickness: 1.7,
-    iridescence: 1.0,
-    iridescenceIOR: 1.35,
-    iridescenceThicknessRange: [120, 780],
+// Opaque Couture Rose-Blush Porcelain with Mother-of-Pearl Iridescent Clearcoat
+// Zero transparency -> crisp sculptural silhouette & clean flush 18k gold tack
+const porcelainMaterial = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color(SPECTRUMS.rainbow.coatColor),
+    emissive: new THREE.Color('#9d174d'),
+    emissiveIntensity: 0.05,
+    metalness: 0.08,
+    roughness: 0.15,
+    transmission: 0.0,
+    transparent: false,
+    iridescence: 0.88,
+    iridescenceIOR: 1.38,
+    iridescenceThicknessRange: [180, 620],
+    sheen: 0.55,
+    sheenColor: new THREE.Color('#fdf2f8'),
+    sheenRoughness: 0.25,
     specularIntensity: 1.0,
     specularColor: new THREE.Color('#ffffff'),
     clearcoat: 1.0,
-    clearcoatRoughness: 0.05,
-    envMapIntensity: 1.3
+    clearcoatRoughness: 0.055,
+    envMapIntensity: 0.95
 });
 
 const stageGroup = new THREE.Group();
 const horsePivot = new THREE.Group();
-const arabianMesh = new THREE.Mesh(arabianGeometry, crystalMaterial);
+const arabianMesh = new THREE.Mesh(arabianGeometry, porcelainMaterial);
 horsePivot.add(arabianMesh);
 
 // ============================================================================
-// 4. COUTURE ROSE-GOLD ARABIAN SHOW HALTER, ROSETTE CONCHOS & CHIN TASSEL
+// 4. PRECISION BEVEL-FITTED 18K CHAMPAGNE GOLD SHOW HALTER (FLUSH ON HEAD)
 // ============================================================================
 const halterGroup = new THREE.Group();
 halterGroup.position.set(-centerOffsetX, -centerOffsetY, 0);
 
-const roseGoldMat = new THREE.MeshStandardMaterial({
-    color: new THREE.Color('#f9c6d9'),
-    emissive: new THREE.Color('#be185d'),
-    emissiveIntensity: 0.12,
-    metalness: 0.88,
-    roughness: 0.18,
-    envMapIntensity: 1.5
+// Warm 18k Champagne Gold (tuned so studio reflections stay warm gold, never chalky white)
+const goldMat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color('#d99b26'),
+    emissive: new THREE.Color('#784705'),
+    emissiveIntensity: 0.14,
+    metalness: 0.78,
+    roughness: 0.24,
+    envMapIntensity: 0.9
 });
 
-const prismJewelMat = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color('#fdf2f8'),
-    emissive: new THREE.Color('#ec4899'),
-    emissiveIntensity: 0.22,
-    metalness: 0.15,
-    roughness: 0.05,
+const pearlStudMat = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('#fff7fb'),
+    emissive: new THREE.Color('#f472b6'),
+    emissiveIntensity: 0.12,
+    metalness: 0.05,
+    roughness: 0.08,
     iridescence: 1.0,
-    iridescenceIOR: 1.45,
+    iridescenceIOR: 1.42,
     clearcoat: 1.0
 });
 
-const halfZ = extrudeDepth * 0.5 + bevelThick + 0.008;
+// Exact surface Z planes of the extruded sculpture
+const flatFaceZ = extrudeDepth * 0.5 + bevelThick + 0.004; // 0.232
+const sideWallZ = extrudeDepth * 0.5;                      // 0.170
+const bevelPad = bevelSize + 0.004;                        // 0.056
 
-// Wrap-around Show Noseband across the dished nasal bridge
-const noseLoopPts = [
-    new THREE.Vector3(1.345, 1.215, 0),
-    new THREE.Vector3(1.29, 1.11, halfZ),
-    new THREE.Vector3(1.23, 0.995, 0),
-    new THREE.Vector3(1.29, 1.11, -halfZ),
-    new THREE.Vector3(1.345, 1.215, 0)
+// Exact boundary points & outward normals computed from buildShowArabianShape:
+// Top dish point: (1.285, 1.233), outward normal: (0.492, 0.871)
+// Bottom jaw point: (1.228, 1.011), outward normal: (0.297, -0.955)
+const dishEdgeX = 1.285 + 0.492 * bevelPad;
+const dishEdgeY = 1.233 + 0.871 * bevelPad;
+const jawEdgeX = 1.228 + 0.297 * bevelPad;
+const jawEdgeY = 1.011 - 0.955 * bevelPad;
+
+// Closed bevel-hugging 18k gold noseband wrapping flush around the dished bridge & jaw
+const noseBandPts = [
+    new THREE.Vector3(1.285, 1.233, flatFaceZ),
+    new THREE.Vector3(dishEdgeX, dishEdgeY, sideWallZ),
+    new THREE.Vector3(dishEdgeX + 0.002, dishEdgeY + 0.002, 0),
+    new THREE.Vector3(dishEdgeX, dishEdgeY, -sideWallZ),
+    new THREE.Vector3(1.285, 1.233, -flatFaceZ),
+    new THREE.Vector3(1.256, 1.122, -flatFaceZ),
+    new THREE.Vector3(1.228, 1.011, -flatFaceZ),
+    new THREE.Vector3(jawEdgeX, jawEdgeY, -sideWallZ),
+    new THREE.Vector3(jawEdgeX + 0.002, jawEdgeY - 0.002, 0),
+    new THREE.Vector3(jawEdgeX, jawEdgeY, sideWallZ),
+    new THREE.Vector3(1.228, 1.011, flatFaceZ),
+    new THREE.Vector3(1.256, 1.122, flatFaceZ)
 ];
-const noseCurve = new THREE.CatmullRomCurve3(noseLoopPts, true);
-const noseTube = new THREE.Mesh(
-    new THREE.TubeGeometry(noseCurve, 48, 0.012, 12, true),
-    roseGoldMat
+
+const noseCurve = new THREE.CatmullRomCurve3(noseBandPts, true, 'centripetal', 0.25);
+halterGroup.add(
+    new THREE.Mesh(new THREE.TubeGeometry(noseCurve, 72, 0.0075, 12, true), goldMat)
 );
-halterGroup.add(noseTube);
 
-// Cheekpieces, Throatlatch Chains & Jeweled Temple Rosette Conchos on both sides
+// Flush 18k Gold Cheekpieces, Throatlatch & Pearl Concho Rosettes on both cheeks
 [-1, 1].forEach((side) => {
-    const zSide = side * (halfZ - 0.004);
+    const zCheek = side * flatFaceZ;
 
-    // Cheekpiece from noseband ring up to temple concho
+    // Fine gold cheekpiece from noseband ring up to temple rosette
     const cheekCurve = new THREE.LineCurve3(
-        new THREE.Vector3(1.285, 1.105, zSide),
-        new THREE.Vector3(0.95, 1.53, zSide)
+        new THREE.Vector3(1.256, 1.122, zCheek),
+        new THREE.Vector3(0.955, 1.49, zCheek)
     );
     halterGroup.add(
-        new THREE.Mesh(new THREE.TubeGeometry(cheekCurve, 12, 0.0105, 10, false), roseGoldMat)
+        new THREE.Mesh(new THREE.TubeGeometry(cheekCurve, 12, 0.0072, 10, false), goldMat)
     );
 
-    // Fine throatlatch chain from temple concho down toward mitbah
+    // Subtle arched throatlatch chain tucked cleanly inside the head/mitbah face
     const throatCurve = new THREE.QuadraticBezierCurve3(
-        new THREE.Vector3(0.95, 1.53, zSide),
-        new THREE.Vector3(0.87, 1.33, zSide * 1.02),
-        new THREE.Vector3(0.85, 1.15, zSide * 0.85)
+        new THREE.Vector3(0.955, 1.49, zCheek),
+        new THREE.Vector3(0.90, 1.32, zCheek),
+        new THREE.Vector3(0.88, 1.16, zCheek)
     );
     halterGroup.add(
-        new THREE.Mesh(new THREE.TubeGeometry(throatCurve, 16, 0.008, 8, false), roseGoldMat)
+        new THREE.Mesh(new THREE.TubeGeometry(throatCurve, 16, 0.0058, 8, false), goldMat)
     );
 
-    // Temple Championship Rosette Concho (Rose-Gold Bezel + Prismatic Jewel)
+    // Dainty gold ring stud at noseband-cheekpiece junction
+    const noseRingStud = new THREE.Mesh(
+        new THREE.TorusGeometry(0.015, 0.0045, 10, 24),
+        goldMat
+    );
+    noseRingStud.position.set(1.256, 1.122, zCheek + side * 0.002);
+    halterGroup.add(noseRingStud);
+
+    // Temple Championship Rosette Concho (18k Gold Bezel + Iridescent Pearl Cabochon)
     const conchoGroup = new THREE.Group();
-    conchoGroup.position.set(0.95, 1.53, zSide + side * 0.006);
+    conchoGroup.position.set(0.955, 1.49, zCheek + side * 0.003);
 
     const bezel = new THREE.Mesh(
-        new THREE.TorusGeometry(0.036, 0.009, 12, 28),
-        roseGoldMat
+        new THREE.TorusGeometry(0.025, 0.0065, 12, 28),
+        goldMat
     );
     conchoGroup.add(bezel);
 
     const cabochon = new THREE.Mesh(
-        new THREE.SphereGeometry(0.028, 20, 20),
-        prismJewelMat
+        new THREE.SphereGeometry(0.02, 20, 20),
+        pearlStudMat
     );
-    cabochon.scale.set(1, 1, 0.45);
+    cabochon.scale.set(1, 1, 0.38);
     conchoGroup.add(cabochon);
 
     halterGroup.add(conchoGroup);
 });
 
-// Signature Moroccan / Scottsdale Hanging Chin Tassel (sways gently!)
-const tasselPivot = new THREE.Group();
-tasselPivot.position.set(1.23, 0.995, 0);
-
-const cordMesh = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.006, 0.006, 0.14, 10),
-    roseGoldMat
-);
-cordMesh.position.y = -0.07;
-tasselPivot.add(cordMesh);
-
-const beadMesh = new THREE.Mesh(
-    new THREE.SphereGeometry(0.022, 16, 16),
-    prismJewelMat
-);
-beadMesh.position.y = -0.145;
-tasselPivot.add(beadMesh);
-
-const plumeMesh = new THREE.Mesh(
-    new THREE.ConeGeometry(0.034, 0.11, 18),
-    roseGoldMat
-);
-plumeMesh.position.y = -0.205;
-tasselPivot.add(plumeMesh);
-
-halterGroup.add(tasselPivot);
 horsePivot.add(halterGroup);
 stageGroup.add(horsePivot);
 
@@ -322,16 +328,15 @@ function createShowFloorTexture() {
     c.height = 512;
     const ctx = c.getContext('2d');
     const g = ctx.createRadialGradient(256, 256, 12, 256, 256, 250);
-    g.addColorStop(0.0, 'rgba(255, 255, 255, 0.85)');
+    g.addColorStop(0.0, 'rgba(255, 255, 255, 0.88)');
     g.addColorStop(0.42, 'rgba(251, 207, 232, 0.42)');
-    g.addColorStop(0.72, 'rgba(233, 213, 255, 0.22)');
+    g.addColorStop(0.72, 'rgba(233, 213, 255, 0.20)');
     g.addColorStop(1.0, 'rgba(255, 255, 255, 0)');
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, 512, 512);
     return new THREE.CanvasTexture(c);
 }
 
-// Soft pearlescent show-ring spotlight floor
 const floorDisc = new THREE.Mesh(
     new THREE.CircleGeometry(2.15, 72),
     new THREE.MeshBasicMaterial({
@@ -344,7 +349,6 @@ const floorDisc = new THREE.Mesh(
 floorDisc.rotation.x = -Math.PI / 2;
 showRingGroup.add(floorDisc);
 
-// Inner & Outer Rose-Gold Show Arena Rings
 const innerRingMat = new THREE.MeshBasicMaterial({
     color: new THREE.Color('#ec4899'),
     transparent: true,
@@ -360,15 +364,15 @@ showRingGroup.add(innerArenaRing);
 const outerArenaRing = new THREE.Mesh(
     new THREE.TorusGeometry(1.88, 0.008, 16, 140),
     new THREE.MeshBasicMaterial({
-        color: new THREE.Color('#a855f7'),
+        color: new THREE.Color('#d99b26'),
         transparent: true,
-        opacity: 0.28
+        opacity: 0.34
     })
 );
 outerArenaRing.rotation.x = Math.PI / 2;
 showRingGroup.add(outerArenaRing);
 
-// Scalloped Championship Rosette Ribbon Ring (36 Rainbow Pleats around the Show Ring!)
+// Scalloped Championship Rosette Ribbon Ring around the Show Plinth
 function createScallopedRosetteRing() {
     const segments = 240;
     const pleats = 32;
@@ -379,7 +383,7 @@ function createScallopedRosetteRing() {
     for (let i = 0; i <= segments; i++) {
         const u = i / segments;
         const theta = u * Math.PI * 2;
-        const r = 1.68 + Math.sin(theta * pleats) * 0.065;
+        const r = 1.68 + Math.sin(theta * pleats) * 0.062;
         pts.push(new THREE.Vector3(Math.cos(theta) * r, 0.006, Math.sin(theta) * r));
 
         const cIdx = (u * palette.length) % palette.length;
@@ -394,7 +398,7 @@ function createScallopedRosetteRing() {
     const mat = new THREE.LineBasicMaterial({
         vertexColors: true,
         transparent: true,
-        opacity: 0.65
+        opacity: 0.62
     });
     return new THREE.Line(geo, mat);
 }
@@ -421,7 +425,7 @@ showRingGroup.add(pulseRingMesh);
 stageGroup.add(showRingGroup);
 
 // ============================================================================
-// 6. SOFT PRISMATIC ROSETTE BACKLIGHT BEHIND HORSE (FOR CRYSTAL REFRACTION)
+// 6. SOFT PEARLESCENT SHOW SPOTLIGHT GLOW BEHIND SCULPTURE
 // ============================================================================
 function createPrismBackdropTexture() {
     const c = document.createElement('canvas');
@@ -429,12 +433,11 @@ function createPrismBackdropTexture() {
     c.height = 512;
     const ctx = c.getContext('2d');
 
-    // Soft concentric pastel rainbow halo strictly localized behind the horse
     const g = ctx.createRadialGradient(256, 256, 10, 256, 256, 245);
-    g.addColorStop(0.0, 'rgba(244, 114, 182, 0.42)');
-    g.addColorStop(0.28, 'rgba(253, 186, 116, 0.24)');
-    g.addColorStop(0.50, 'rgba(125, 211, 252, 0.24)');
-    g.addColorStop(0.72, 'rgba(196, 181, 253, 0.22)');
+    g.addColorStop(0.0, 'rgba(249, 168, 212, 0.34)');
+    g.addColorStop(0.32, 'rgba(253, 224, 171, 0.18)');
+    g.addColorStop(0.58, 'rgba(186, 230, 253, 0.16)');
+    g.addColorStop(0.80, 'rgba(233, 213, 255, 0.14)');
     g.addColorStop(1.0, 'rgba(255, 255, 255, 0)');
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, 512, 512);
@@ -442,7 +445,7 @@ function createPrismBackdropTexture() {
 }
 
 const backdropAura = new THREE.Mesh(
-    new THREE.PlaneGeometry(4.2, 4.2),
+    new THREE.PlaneGeometry(4.4, 4.4),
     new THREE.MeshBasicMaterial({
         map: createPrismBackdropTexture(),
         transparent: true,
@@ -453,85 +456,34 @@ const backdropAura = new THREE.Mesh(
 backdropAura.position.set(0, 0.1, -0.95);
 stageGroup.add(backdropAura);
 
-// Floating Show-Ring Crystal Stardust Motes around the Arabian
-function createSoftGlowSprite() {
-    const c = document.createElement('canvas');
-    c.width = 64;
-    c.height = 64;
-    const ctx = c.getContext('2d');
-    const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-    g.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    g.addColorStop(0.38, 'rgba(244, 114, 182, 0.78)');
-    g.addColorStop(0.78, 'rgba(168, 85, 247, 0.18)');
-    g.addColorStop(1, 'rgba(255, 255, 255, 0)');
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, 64, 64);
-    return new THREE.CanvasTexture(c);
-}
-
-const moteCount = 38;
-const motePositions = new Float32Array(moteCount * 3);
-const moteColors = new Float32Array(moteCount * 3);
-const paletteColors = SPECTRUMS.rainbow.rosette.map((h) => new THREE.Color(h));
-
-for (let i = 0; i < moteCount; i++) {
-    const angle = (i / moteCount) * Math.PI * 2;
-    const radius = 1.2 + Math.random() * 1.1;
-    motePositions[i * 3] = Math.cos(angle) * radius;
-    motePositions[i * 3 + 1] = -1.2 + Math.random() * 2.8;
-    motePositions[i * 3 + 2] = Math.sin(angle) * (0.4 + Math.random() * 0.6);
-
-    const c = paletteColors[i % paletteColors.length];
-    moteColors[i * 3] = c.r;
-    moteColors[i * 3 + 1] = c.g;
-    moteColors[i * 3 + 2] = c.b;
-}
-
-const moteGeo = new THREE.BufferGeometry();
-moteGeo.setAttribute('position', new THREE.BufferAttribute(motePositions, 3));
-moteGeo.setAttribute('color', new THREE.BufferAttribute(moteColors, 3));
-
-const motesPoints = new THREE.Points(
-    moteGeo,
-    new THREE.PointsMaterial({
-        size: 0.13,
-        map: createSoftGlowSprite(),
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.72,
-        depthWrite: false
-    })
-);
-stageGroup.add(motesPoints);
-
 scene.add(stageGroup);
 
 // ============================================================================
-// 7. SHOW-RING SPOTLIGHTS
+// 7. SHOW-RING LIGHTING
 // ============================================================================
-const ambientLight = new THREE.AmbientLight(0xfff7fb, 0.88);
+const ambientLight = new THREE.AmbientLight(0xfff7fb, 0.95);
 scene.add(ambientLight);
 
-const lightRose = new THREE.PointLight(0xec4899, 3.4, 30);
-lightRose.position.set(-4.5, 4.8, 4.2);
+const lightRose = new THREE.PointLight(0xec4899, 2.8, 30);
+lightRose.position.set(-4.5, 4.8, 4.5);
 scene.add(lightRose);
 
-const lightPrism = new THREE.PointLight(0x38bdf8, 2.5, 30);
-lightPrism.position.set(4.0, 3.8, 3.8);
+const lightPrism = new THREE.PointLight(0x38bdf8, 2.0, 30);
+lightPrism.position.set(4.2, 3.8, 4.0);
 scene.add(lightPrism);
 
-const lightLilac = new THREE.PointLight(0xa855f7, 2.7, 30);
-lightLilac.position.set(1.5, -4.0, 3.2);
+const lightLilac = new THREE.PointLight(0xa855f7, 2.2, 30);
+lightLilac.position.set(1.5, -4.0, 3.5);
 scene.add(lightLilac);
 
-const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
-dirLight.position.set(-2, 6.5, 6);
+const dirLight = new THREE.DirectionalLight(0xffffff, 1.45);
+dirLight.position.set(-2.2, 6.2, 6.5);
 scene.add(dirLight);
 
+let targetCoatColor = new THREE.Color(SPECTRUMS.rainbow.coatColor);
 let targetLightAColor = new THREE.Color(SPECTRUMS.rainbow.lightA);
 let targetLightBColor = new THREE.Color(SPECTRUMS.rainbow.lightB);
 let targetLightCColor = new THREE.Color(SPECTRUMS.rainbow.lightC);
-let targetAttenuationColor = new THREE.Color(SPECTRUMS.rainbow.attenuation);
 let targetRingColor = new THREE.Color(SPECTRUMS.rainbow.ringAccent);
 
 // ============================================================================
@@ -603,7 +555,7 @@ function spawnSparkle(x, y, burst = false) {
 
 function triggerShowSpotlight(originX, originY) {
     spotlightPulse = 1.0;
-    showPoseTurn = 0.32;
+    showPoseTurn = 0.3;
     const cx = originX ?? window.innerWidth * 0.32;
     const cy = originY ?? window.innerHeight * 0.48;
     for (let i = 0; i < 24; i++) {
@@ -617,7 +569,7 @@ window.addEventListener('pointermove', (e) => {
     mouseNormY = (e.clientY / window.innerHeight) * 2 - 1;
 
     const now = performance.now();
-    if (now - lastSparkleTime > 48) {
+    if (now - lastSparkleTime > 55) {
         spawnSparkle(e.clientX, e.clientY, false);
         lastSparkleTime = now;
     }
@@ -655,10 +607,10 @@ spectrumBtns.forEach((btn) => {
         spectrumBtns.forEach((b) => b.classList.toggle('active', b === btn));
 
         const spec = SPECTRUMS[key];
+        targetCoatColor.set(spec.coatColor);
         targetLightAColor.set(spec.lightA);
         targetLightBColor.set(spec.lightB);
         targetLightCColor.set(spec.lightC);
-        targetAttenuationColor.set(spec.attenuation);
         targetRingColor.set(spec.ringAccent);
 
         const rect = btn.getBoundingClientRect();
@@ -720,30 +672,25 @@ function animate() {
     spotlightPulse = Math.max(0, spotlightPulse - 0.016);
     showPoseTurn *= 0.94;
 
-    // Smoothly transition show-ring light colors
+    // Smoothly transition porcelain finish & show-ring light colors
+    porcelainMaterial.color.lerp(targetCoatColor, 0.05);
     lightRose.color.lerp(targetLightAColor, 0.05);
     lightPrism.color.lerp(targetLightBColor, 0.05);
     lightLilac.color.lerp(targetLightCColor, 0.05);
-    crystalMaterial.attenuationColor.lerp(targetAttenuationColor, 0.05);
     innerRingMat.color.lerp(targetRingColor, 0.05);
 
-    // Subtle poised breathing while keeping hooves grounded near show plinth
-    stageGroup.position.y = stageBaseY + Math.sin(t * 0.7) * 0.06;
+    // Subtle poised breathing above show plinth
+    stageGroup.position.y = stageBaseY + Math.sin(t * 0.7) * 0.05;
 
     // Poised Show Arabian turntable / cursor presentation
     const targetRotY = mouseNormX * 0.42 + Math.sin(t * 0.32) * 0.16 + showPoseTurn;
-    const targetRotX = mouseNormY * 0.12;
+    const targetRotX = mouseNormY * 0.11;
 
     horsePivot.rotation.y += (targetRotY - horsePivot.rotation.y) * 0.06;
     horsePivot.rotation.x += (targetRotX - horsePivot.rotation.x) * 0.06;
 
-    // Gentle pendulum sway on the Show Halter Chin Tassel
-    tasselPivot.rotation.z = Math.sin(t * 1.9) * 0.08 - (targetRotY - horsePivot.rotation.y) * 0.6;
-    tasselPivot.rotation.x = Math.cos(t * 1.5) * 0.05;
-
     // Slowly rotate the scalloped Championship Rosette Ring on the show floor
     rosetteRibbonRing.rotation.y = t * 0.12;
-    motesPoints.rotation.y = t * 0.1;
 
     // Animate Championship Spotlight Ripple Ring
     if (spotlightPulse > 0.005) {
